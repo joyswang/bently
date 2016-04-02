@@ -11,10 +11,10 @@
 #idea #
 *.iml
 *.ipr
-*.lws
+*.iws
 
-*/.gradle/*
-*/.idea/*
+.gradle/*
+.idea/*
 
 # jar war #
 *.war
