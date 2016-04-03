@@ -11,4 +11,9 @@ public class StringUtils {
         }
         return false ;
     }
+
+    public static String replaceEach(String url, String ... values) {
+
+        return org.apache.commons.lang3.StringUtils.replaceEach(url,new String[]{"{[]}"},values) ;
+    }
 }
