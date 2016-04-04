@@ -5,4 +5,6 @@ package com.spring.wx.service;
  */
 public interface MenuService {
     public String createMenu(String menu) ;
+
+    public String deleteMenu() ;
 }

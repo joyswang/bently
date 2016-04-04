@@ -14,6 +14,12 @@ public class StringUtils {
 
     public static String replaceEach(String url, String ... values) {
 
-        return org.apache.commons.lang3.StringUtils.replaceEach(url,new String[]{"{[]}"},values) ;
+        //String reg = "{[]}" ;
+        for(String value : values) {
+            url = url.replaceFirst("\\{\\[\\]\\}",value) ;
+        }
+        return url ;
+
+        //return org.apache.commons.lang3.StringUtils.replaceEach(url,new String[]{"{[]}"},values) ;
     }
 }

@@ -17,7 +17,7 @@ public class MyTest {
 
     @Test
     public void testHttps() {
-        //{"access_token":"VJM_fdOk3dV0kIMLvSJPj21rlXzaHt8MtgcW9kBk6aAVFkNoxw0smCwQqAl5aL3qKHB5PMM8EN6Amv267--fJCUOeUP31bkZUT_DN-r7TV0iRf5NGlzv_qazJaF-JnZgTKEcAGAZQK","expires_in":7200}
+        //{"access_token":"Hht0QmyysCpgJpD4WXH_36OymMJW00Xn1kbNU5HVoPodLCKcvDETCa1G9IHDrhse72KPDkAqXmIznPLLmVKkQ6Wz2MxxpNzRKEE4vEbCpXvUWFK83ohEgDuH5M_65e8YVLQiAAAFVA","expires_in":7200}
         HttpConnectionCommon hcc =
                 new HttpConnectionCommon("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxff3d1c1de2bd91fe&secret=adf7f3377400add0b0b4698af5a1fc58", "GET") ;
         CustomHttpsConnection connection = new CustomHttpsConnection(hcc) ;

@@ -1,6 +1,8 @@
 package com.spring.wx.controller;
 
 import com.spring.wx.utils.StringUtils;
+import com.spring.wx.utils.WeixinPropertiesUtils;
+import com.spring.wx.utils.XmlUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,11 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by wgq on 16-4-2.
@@ -25,19 +26,37 @@ public class EntranceController {
 
     @RequestMapping(value = "/entrance", method = RequestMethod.GET)
     public String entranceGet(HttpServletRequest request) {
-        if(checkSignature(request)) {
-            String echostr = request.getParameter("echostr") ;
-            return echostr ;
+        String echostr = request.getParameter("echostr") ;
+        log.info("echostr = " + echostr);
+        //第一次接入的时候需要检查
+        if(echostr != null) {
+            if (checkSignature(request)) {
+                return echostr;
+            }
         }
+        getMessagePost(request) ;
 
-
-        return "null" ;
+        return "" ;
     }
 
     @RequestMapping(value = "/entrance", method = RequestMethod.POST)
     public String entrancePost(HttpServletRequest request) {
 
         return this.entranceGet(request) ;
+    }
+
+    //处理微信发送的请求
+    private String getMessagePost(HttpServletRequest request) {
+        try {
+            InputStream inputStream = request.getInputStream() ;
+            Map msgMap = XmlUtils.xmlToMap(inputStream) ;
+            log.info("msgMap = " + msgMap.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "success" ;
+
     }
 
 
@@ -51,7 +70,7 @@ public class EntranceController {
         "timestamp = " + timestamp +
         "nonce = " + nonce ) ;
 
-        String token = "spring_weixin_wgq" ;
+        String token = WeixinPropertiesUtils.getProperties("token");
 
         if(StringUtils.isEmpty(signature)) {
             return false ;

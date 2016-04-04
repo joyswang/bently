@@ -1,6 +1,7 @@
 package com.spring.wx.schedule;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.spring.wx.utils.JsonUtils;
 import com.spring.wx.utils.StringUtils;
 import com.spring.wx.utils.WeixinPropertiesUtils;
 import com.spring.wx.utils.httptool.CustomHttpsConnection;
@@ -23,25 +24,25 @@ public class AccessTokenSchedule {
     private static Logger log = LoggerFactory.getLogger(AccessTokenSchedule.class) ;
 
     //每个小时触发一次
-    @Scheduled(cron = "0 0 * * * ?")
+    @Scheduled(cron = "0 21 * * * ?")
     public void getAccessToken() {
+        log.info("进入access_token........");
 
         String access_token_url = WeixinPropertiesUtils.getProperties("access_token_url") ;
         String appid = WeixinPropertiesUtils.getProperties("appid") ;
         String secret = WeixinPropertiesUtils.getProperties("secret") ;
 
         String postUrl = StringUtils.replaceEach(access_token_url,appid,secret) ;
+        log.info("postUrl = " + postUrl);
 
         HttpConnectionCommon hcc = new HttpConnectionCommon(postUrl, "GET") ;
         CustomHttpsConnection connection = new CustomHttpsConnection(hcc) ;
         String jsonResult = connection.httpsClient(null) ;
         log.info("jsonResult = " + jsonResult);
-        ObjectMapper om = new ObjectMapper() ;
-        Map map = null ;
-        try {
-            map = om.readValue(jsonResult, HashMap.class) ;
-        } catch (IOException e) {
-            e.printStackTrace();
+        Map map = JsonUtils.jsonToMap(jsonResult);
+        if(map == null) {
+            log.info("获取access_token的json格式字符串有问题，无法转成map对象");
+            return ;
         }
 
         String errcode = map.get("errcode")==null?"":map.get("errcode").toString() ;

@@ -1,6 +1,8 @@
 package com.spring.wx.controller;
 
 import com.spring.wx.service.MenuService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/menu")
 public class MenuController {
+
+    private static Logger log = LoggerFactory.getLogger(MenuController.class) ;
 
     @Autowired
     private MenuService menuService ;
@@ -47,9 +51,16 @@ public class MenuController {
             }]
         }*/
 
-        String menu = "{\"button\" : [{\"type\" : \"view\",\"name\":\"百度\",\"url\":\"http://www.baidu.com\"}]}" ;
+        String menu = "{\"button\" : [{\"type\" : \"view\",\"name\":\"百度\",\"url\":\"http://www.baidu.com\"},{\"type\":\"click\",\"name\":\"俱乐部简介\",\"key\":\"WX_JLBJJ\"}]}" ;
+        log.info(menu);
 
 
         return menuService.createMenu(menu) ;
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public String delete() {
+
+        return menuService.deleteMenu() ;
     }
 }

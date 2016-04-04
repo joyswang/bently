@@ -26,4 +26,16 @@ public class MenuServiceImpl implements MenuService {
         String message = connection.httpsClient(menu) ;
         return message ;
     }
+
+    @Override
+    public String deleteMenu() {
+        String delete_menu_url = WeixinPropertiesUtils.getProperties("delete_menu_url") ;
+        String access_token = WeixinPropertiesUtils.getProperties("access_token") ;
+
+        String postUrl = StringUtils.replaceEach(delete_menu_url,access_token) ;
+        HttpConnectionCommon hcc = new HttpConnectionCommon(postUrl,"GET") ;
+        CustomHttpsConnection connection = new CustomHttpsConnection(hcc) ;
+
+        return connection.httpsClient(null) ;
+    }
 }
