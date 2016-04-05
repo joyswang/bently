@@ -1,8 +1,8 @@
-package com.spring.wx.controller;
+package com.spring.bently.wx.controller;
 
-import com.spring.wx.utils.StringUtils;
-import com.spring.wx.utils.WeixinPropertiesUtils;
-import com.spring.wx.utils.XmlUtils;
+import com.spring.bently.wx.utils.StringUtils;
+import com.spring.bently.wx.utils.WeixinPropertiesUtils;
+import com.spring.bently.wx.utils.XmlUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**

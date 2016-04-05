@@ -1,9 +1,11 @@
-package com.spring.wx.utils.httptool;
+package com.spring.bently.wx.utils.httptool;
 
-import com.spring.wx.utils.StringUtils;
+
+import com.spring.bently.wx.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
@@ -15,53 +17,27 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 
+
 /**
  * Created by wgq on 16-4-2.
  */
-public class CustomHttpConnection {
+public class CustomHttpsConnection {
 
-    private static Logger log = LoggerFactory.getLogger(CustomHttpConnection.class) ;
+    private static Logger log = LoggerFactory.getLogger(CustomHttpsConnection.class) ;
 
     private HttpConnectionCommon hcc ;
 
   //  private String urlCustom ;
 
- //   private int timeout = 5000 ;
+  //  private int timeout = 5000 ;
 
- //   private String requestMethod = "GET" ;
+  //  private String requestMethod = "GET" ;
 
- //   private String contentType = "application/x-www-form-urlencoded" ;
+  //  private String contentType = "application/x-www-form-urlencoded" ;
 
-
-  /*  //get请求
-    public String httpGet() {
-        log.info("httpGet请求开始~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        HttpURLConnection conn = this.getHttpUrlConnection() ;
-
-        try {
-            conn.connect();
-            if(conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                return null ;
-            }
-
-            String responseMsg = inputStreamToString(conn.getInputStream()) ;
-            log.info("url = " + urlCustom + "requestMethod = " + requestMethod);
-            log.info("responseMsg = " + responseMsg);
-            log.info("httpGet请求结束~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            return responseMsg ;
-        } catch (IOException e) {
-           // e.printStackTrace();
-            log.warn("httpGet请求出现错误：" + e.getMessage());
-        }finally {
-
-        }
-        return null ;
-    }*/
-
-    //请求
-    public String httpClient(String requsetMessage) {
-        log.info("http请求开始~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        HttpURLConnection conn = this.getHttpUrlConnection(requsetMessage) ;
+    public String httpsClient(String requsetMessage){
+        log.info("https请求开始~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        HttpsURLConnection conn = this.getHttpsUrlConnection(requsetMessage) ;
 
         try{
 
@@ -73,20 +49,19 @@ public class CustomHttpConnection {
                 postMsg(requsetMessage, conn.getOutputStream()) ;
             }
 
-
             if(conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 log.debug("请求出错,错误代码：" + conn.getResponseCode());
                 return null ;
             }
 
             String responseMsg = inputStreamToString(conn.getInputStream()) ;
-            log.info("HttpConnectionCommon = " + hcc.toString() );
+            log.info("HttpConnectionCommon = " + this.hcc.toString());
             log.info("responseMsg = " + responseMsg);
-            log.info("http请求结束~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            log.info("https请求结束~~~~~~~~~~~~~~~~~~~~~~~~~~");
             return responseMsg ;
         }catch (IOException e) {
             //e.printStackTrace();
-            log.warn("http请求出现错误：" + e.getMessage());
+            log.warn("https请求出现错误：" + e.getMessage());
         }finally {
 
         }
@@ -94,29 +69,49 @@ public class CustomHttpConnection {
         return null ;
     }
 
-    //得到HttpUrlConnection对象
-    private HttpURLConnection getHttpUrlConnection(String requestMessage) {
+    private HttpsURLConnection getHttpsUrlConnection(String requestMessage) {
         try {
             URL url = new URL(this.hcc.getUrlCustom()) ;
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
             conn.setConnectTimeout(this.hcc.getTimeout());
             conn.setRequestMethod(this.hcc.getRequestMethod());
             conn.setRequestProperty("Accept-Charset", "utf-8");
+            conn.setSSLSocketFactory(this.createSSLSocketFactory());
             conn.setRequestProperty("Content-Type", this.hcc.getContentType());
+
             if(!StringUtils.isEmpty(requestMessage)) {
                 conn.setDoOutput(true);
                 conn.setRequestProperty("Content-Length", String.valueOf(requestMessage.length()));
             }
-            //conn.connect();
+
             return conn ;
         } catch (MalformedURLException e) {
-          //  e.printStackTrace();
-            log.warn("获取HttpUrlConnection出错：" + e.getMessage());
+            e.printStackTrace();
+            log.warn("获取HttpsUrlConnection对象出错：" + e.getMessage());
         } catch (IOException e) {
-          //  e.printStackTrace();
-            log.warn("获取HttpUrlConnection出错：" + e.getMessage());
+            e.printStackTrace();
+            log.warn("获取HttpsUrlConnection对象出错：" + e.getMessage());
         }
         return null ;
+    }
+
+    private SSLSocketFactory createSSLSocketFactory() {
+        TrustManager[] tm = { new MyTrustManager() };
+        SSLContext sslContext = null;
+        try {
+            sslContext = SSLContext.getInstance("SSL", "SunJSSE");
+            sslContext.init(null, tm, new java.security.SecureRandom());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchProviderException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+
+        SSLSocketFactory ssf = sslContext.getSocketFactory();
+
+        return ssf ;
     }
 
     //post发送String消息
@@ -165,10 +160,9 @@ public class CustomHttpConnection {
         return null ;
     }
 
-    private CustomHttpConnection() {}   //关闭午餐的构造方法
+    private CustomHttpsConnection() {}
 
-
-    public CustomHttpConnection(HttpConnectionCommon hcc) {
+    public CustomHttpsConnection(HttpConnectionCommon hcc) {
         this.hcc = hcc ;
     }
 

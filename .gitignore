@@ -15,6 +15,7 @@
 
 .gradle/*
 .idea/*
+build/*
 out/*
 
 # jar war #

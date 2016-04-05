@@ -1,4 +1,4 @@
-package com.spring.wx.utils;
+package com.spring.bently.wx.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

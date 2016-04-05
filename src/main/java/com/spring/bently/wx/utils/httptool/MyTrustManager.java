@@ -1,4 +1,4 @@
-package com.spring.wx.utils.httptool;
+package com.spring.bently.wx.utils.httptool;
 
 import javax.net.ssl.X509TrustManager;
 import java.security.cert.CertificateException;

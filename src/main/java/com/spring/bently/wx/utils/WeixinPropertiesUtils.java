@@ -1,4 +1,4 @@
-package com.spring.wx.utils;
+package com.spring.bently.wx.utils;
 
 import java.io.*;
 import java.util.Properties;
@@ -13,7 +13,7 @@ public class WeixinPropertiesUtils {
     static {
         prop = new Properties() ;
         try {
-            InputStream in = new BufferedInputStream(WeixinPropertiesUtils.class.getResourceAsStream("/weixin/weixin.properties")) ;
+            InputStream in = new BufferedInputStream(WeixinPropertiesUtils.class.getResourceAsStream("/wx/weixin.properties")) ;
             prop.load(in);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

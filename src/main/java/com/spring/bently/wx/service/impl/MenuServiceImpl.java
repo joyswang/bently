@@ -1,10 +1,10 @@
-package com.spring.wx.service.impl;
+package com.spring.bently.wx.service.impl;
 
-import com.spring.wx.service.MenuService;
-import com.spring.wx.utils.StringUtils;
-import com.spring.wx.utils.WeixinPropertiesUtils;
-import com.spring.wx.utils.httptool.CustomHttpsConnection;
-import com.spring.wx.utils.httptool.HttpConnectionCommon;
+import com.spring.bently.wx.service.MenuService;
+import com.spring.bently.wx.utils.StringUtils;
+import com.spring.bently.wx.utils.WeixinPropertiesUtils;
+import com.spring.bently.wx.utils.httptool.CustomHttpsConnection;
+import com.spring.bently.wx.utils.httptool.HttpConnectionCommon;
 
 import org.springframework.stereotype.Service;
 

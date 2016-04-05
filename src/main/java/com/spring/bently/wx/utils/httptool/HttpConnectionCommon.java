@@ -1,6 +1,6 @@
-package com.spring.wx.utils.httptool;
+package com.spring.bently.wx.utils.httptool;
 
-import com.spring.wx.utils.StringUtils;
+import com.spring.bently.wx.utils.StringUtils;
 
 import java.io.Serializable;
 

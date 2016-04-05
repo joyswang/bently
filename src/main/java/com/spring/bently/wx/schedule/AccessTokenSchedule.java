@@ -1,18 +1,15 @@
-package com.spring.wx.schedule;
+package com.spring.bently.wx.schedule;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spring.wx.utils.JsonUtils;
-import com.spring.wx.utils.StringUtils;
-import com.spring.wx.utils.WeixinPropertiesUtils;
-import com.spring.wx.utils.httptool.CustomHttpsConnection;
-import com.spring.wx.utils.httptool.HttpConnectionCommon;
+import com.spring.bently.wx.utils.JsonUtils;
+import com.spring.bently.wx.utils.StringUtils;
+import com.spring.bently.wx.utils.WeixinPropertiesUtils;
+import com.spring.bently.wx.utils.httptool.CustomHttpsConnection;
+import com.spring.bently.wx.utils.httptool.HttpConnectionCommon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 /**

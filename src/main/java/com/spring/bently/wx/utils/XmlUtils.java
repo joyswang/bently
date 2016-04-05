@@ -1,4 +1,4 @@
-package com.spring.wx.utils;
+package com.spring.bently.wx.utils;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;

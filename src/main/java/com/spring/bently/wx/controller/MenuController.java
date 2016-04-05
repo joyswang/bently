@@ -1,6 +1,6 @@
-package com.spring.wx.controller;
+package com.spring.bently.wx.controller;
 
-import com.spring.wx.service.MenuService;
+import com.spring.bently.wx.service.MenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.spring.wx.service;
+package com.spring.bently.wx.service;
 
 /**
  * Created by wgq on 16-4-4.

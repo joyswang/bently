@@ -1,4 +1,4 @@
-package com.spring.wx.utils;
+package com.spring.bently.wx.utils;
 
 /**
  * Created by wgq on 16-3-31.
