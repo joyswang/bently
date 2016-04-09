@@ -1,11 +1,13 @@
 package com.spring.bently.wx.controller;
 
+import com.spring.bently.wx.service.IEntranceService;
 import com.spring.bently.wx.utils.StringUtils;
 import com.spring.bently.wx.utils.WeixinPropertiesUtils;
 import com.spring.bently.wx.utils.XmlUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +24,9 @@ import java.util.*;
 public class EntranceController {
 
     private static Logger log = LoggerFactory.getLogger(EntranceController.class) ;
+
+    @Autowired
+    private IEntranceService entranceService ;
 
     @RequestMapping(value = "/entrance", method = RequestMethod.GET)
     public String entranceGet(HttpServletRequest request) {
@@ -48,8 +53,13 @@ public class EntranceController {
     private String getMessagePost(HttpServletRequest request) {
         try {
             InputStream inputStream = request.getInputStream() ;
-            Map msgMap = XmlUtils.xmlToMap(inputStream) ;
+            if(inputStream == null) {
+                return "" ;
+            }
+            Map<String,String> msgMap = XmlUtils.xmlToMap(inputStream) ;
             log.info("msgMap = " + msgMap.toString());
+            String returnMsg = entranceService.entrance(msgMap) ;
+            return returnMsg ;
         } catch (IOException e) {
             e.printStackTrace();
         }

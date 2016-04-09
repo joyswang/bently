@@ -7,4 +7,6 @@ public interface MenuService {
     public String createMenu(String menu) ;
 
     public String deleteMenu() ;
+
+    public String selectMenu() ;
 }

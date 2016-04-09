@@ -16,16 +16,16 @@ import java.util.Map;
 public class XmlUtils {
 
     //微信xml-to-map
-    public static Map xmlToMap(InputStream inputStream) {
+    public static Map<String,String> xmlToMap(InputStream inputStream) {
         SAXReader reader = new SAXReader() ;
         reader.setEncoding("UTF-8");
-        Map map = new HashMap() ;
+        Map<String,String> map = new HashMap<String,String>() ;
         try {
             Document document = reader.read(inputStream) ;
             Element root = document.getRootElement() ;
             for(Iterator it = root.elementIterator();it.hasNext();) {
                 Element element = (Element) it.next() ;
-                map.put(element.getName(),element.getText()) ;
+                map.put(element.getName().toLowerCase(),element.getText().toLowerCase()) ;
             }
         } catch (DocumentException e) {
             e.printStackTrace();

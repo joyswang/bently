@@ -1,5 +1,7 @@
 package com.spring.bently.wx.schedule;
 
+import com.spring.bently.manager.dao.AccessTokenDao;
+import com.spring.bently.manager.model.AccessToken;
 import com.spring.bently.wx.utils.JsonUtils;
 import com.spring.bently.wx.utils.StringUtils;
 import com.spring.bently.wx.utils.WeixinPropertiesUtils;
@@ -7,9 +9,12 @@ import com.spring.bently.wx.utils.httptool.CustomHttpsConnection;
 import com.spring.bently.wx.utils.httptool.HttpConnectionCommon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,8 +25,11 @@ public class AccessTokenSchedule {
 
     private static Logger log = LoggerFactory.getLogger(AccessTokenSchedule.class) ;
 
+    @Autowired
+    private AccessTokenDao accessTokenDao ;
+
     //每个小时触发一次
-    @Scheduled(cron = "0 21 * * * ?")
+    @Scheduled(cron = "0 0 * * * ?")
     public void getAccessToken() {
         log.info("进入access_token........");
 
@@ -44,7 +52,11 @@ public class AccessTokenSchedule {
 
         String errcode = map.get("errcode")==null?"":map.get("errcode").toString() ;
         if(StringUtils.isEmpty(errcode)) {
-            WeixinPropertiesUtils.setProperties("access_token",map.get("access_token").toString());
+
+            AccessToken accessToken = accessTokenDao.findOne(1L);
+            accessToken.setAccesstoken(map.get("access_token").toString());
+            accessTokenDao.save(accessToken) ;
+            //WeixinPropertiesUtils.setProperties("access_token",map.get("access_token").toString());
         }
 
     }

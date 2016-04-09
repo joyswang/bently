@@ -63,4 +63,11 @@ public class MenuController {
 
         return menuService.deleteMenu() ;
     }
+
+    @RequestMapping(value = "/select", method = RequestMethod.GET)
+    public String select() {
+
+
+        return menuService.selectMenu() ;
+    }
 }
