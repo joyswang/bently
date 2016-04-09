@@ -11,6 +11,8 @@
 package com.spring.bently.manager.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -23,6 +25,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "user")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
     @Id

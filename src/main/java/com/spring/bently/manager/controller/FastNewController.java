@@ -10,12 +10,17 @@
  */
 package com.spring.bently.manager.controller;
 
+import com.spring.bently.manager.dao.ClubSummaryDao;
 import com.spring.bently.manager.dao.UserDao;
+import com.spring.bently.manager.model.ClubSummary;
 import com.spring.bently.manager.model.User;
 import com.spring.bently.manager.pagedata.BentlyResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Iterator;
 
 /**
  * 功能描述:  <p>
@@ -28,16 +33,34 @@ import org.springframework.web.bind.annotation.RestController;
 public class FastNewController {
 
     @Autowired
-    private UserDao userTestDao;
+    private UserDao userDao;
 
-    @RequestMapping("/summary")
+    @Autowired
+    private ClubSummaryDao clubSummaryDao;
+
+    @RequestMapping("/get/summary")
     public BentlyResponse getSummary(){
-        User userTest = new User();
-        userTest = userTestDao.findByName("99111");
-        if(userTest == null ){
+        ClubSummary clubSummary = new ClubSummary();
+        Iterator<ClubSummary> iterable = clubSummaryDao.findAll().iterator();
+        if(iterable.hasNext()){
+            clubSummary = iterable.next();
+        }
+        if(clubSummary == null ){
             return BentlyResponse.fail("数据异常，请稍后重试！");
         }else{
-            return BentlyResponse.success(userTest);
+            return BentlyResponse.success(clubSummary);
+        }
+    }
+
+
+    @RequestMapping("/update/summary")
+    public BentlyResponse updateSummary(@RequestBody ClubSummary clubSummary){
+
+        if(clubSummary == null ){
+            return BentlyResponse.fail("数据异常，请稍后重试！");
+        }else{
+            ClubSummary result = clubSummaryDao.save(clubSummary);
+            return BentlyResponse.success(result);
         }
     }
 

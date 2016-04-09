@@ -5,11 +5,30 @@
 
 (function () {
     var app = angular.module('jtdscs.controller');
-    app.controller("ShipCompanyCtrl", ShipCompanyCtrl);
+    app.controller("ShipCompanyCtrl", ['$scope','$http',ShipCompanyCtrl]);
 
-    function ShipCompanyCtrl() {
-        var self =this;
-        self.test = "shipcompany";
+    function ShipCompanyCtrl($scope,$http) {
+
+        $scope.clubSummary={};
+
+        $http.get("get/summary").then(function(data){
+            if(data){
+                $scope.clubSummary = data;
+            }
+        });
+
+        $scope.updateSummary = function(){
+
+            $http.post("update/summary",$scope.clubSummary).then(function(data){
+                if(data){
+                    $scope.clubSummary = data;
+                }else{
+                    $.messager.alert('简介保存','简介保存失败，请重新操作!','error');
+                }
+
+
+            });
+        }
 
 
     }

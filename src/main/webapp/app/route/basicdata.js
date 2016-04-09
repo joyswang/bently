@@ -5,6 +5,6 @@
 angular.module('jtdscs.route')
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/basicdata/shipcompany', {
-            templateUrl: 'view/basicdata/shipcompany.html'
+            templateUrl: '/app/view/basicdata/shipcompany.html'
         });
     }]);
