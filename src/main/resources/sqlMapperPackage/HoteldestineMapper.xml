@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.bently.manager.db.mapper.HoteldestineMapper">
+  <resultMap id="BaseResultMap" type="com.spring.bently.manager.db.model.Hoteldestine">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="wechatid" jdbcType="VARCHAR" property="wechatid" />
+    <result column="wechatname" jdbcType="VARCHAR" property="wechatname" />
+    <result column="destinetime" jdbcType="TIMESTAMP" property="destinetime" />
+    <result column="daynum" jdbcType="INTEGER" property="daynum" />
+    <result column="handleuser" jdbcType="VARCHAR" property="handleuser" />
+    <result column="idhandle" jdbcType="INTEGER" property="idhandle" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    id, wechatid, wechatname, destinetime, daynum, handleuser, idhandle
+  </sql>
+  <select id="selectByExample" parameterType="com.spring.bently.manager.db.model.HoteldestineExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hoteldestine
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.spring.bently.manager.db.model.HoteldestineExample">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from hoteldestine
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.spring.bently.manager.db.model.HoteldestineExample" resultType="java.lang.Integer">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select count(*) from hoteldestine
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update hoteldestine
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.wechatid != null">
+        wechatid = #{record.wechatid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wechatname != null">
+        wechatname = #{record.wechatname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.destinetime != null">
+        destinetime = #{record.destinetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.daynum != null">
+        daynum = #{record.daynum,jdbcType=INTEGER},
+      </if>
+      <if test="record.handleuser != null">
+        handleuser = #{record.handleuser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idhandle != null">
+        idhandle = #{record.idhandle,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update hoteldestine
+    set id = #{record.id,jdbcType=INTEGER},
+      wechatid = #{record.wechatid,jdbcType=VARCHAR},
+      wechatname = #{record.wechatname,jdbcType=VARCHAR},
+      destinetime = #{record.destinetime,jdbcType=TIMESTAMP},
+      daynum = #{record.daynum,jdbcType=INTEGER},
+      handleuser = #{record.handleuser,jdbcType=VARCHAR},
+      idhandle = #{record.idhandle,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

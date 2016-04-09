@@ -26,7 +26,7 @@ import java.util.List;
  * @since bently 1.0
  */
 @Service
-public class FastNewService extends BaseDao {
+public class FastNewService {
 
 
     @Autowired

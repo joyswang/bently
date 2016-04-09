@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.sql.DataSource;
 
@@ -29,6 +30,7 @@ import javax.sql.DataSource;
  * @since bently 1.0
  */
 @Configuration
+@EnableWebMvc
 @EnableTransactionManagement
 public class DataBaseConfiguration implements EnvironmentAware {
 
@@ -40,8 +42,6 @@ public class DataBaseConfiguration implements EnvironmentAware {
 
     private static final String password = "Jtd@2016";
 
-
-    private RelaxedPropertyResolver propertyResolver;
     @Override
     public void setEnvironment(Environment environment) {
 

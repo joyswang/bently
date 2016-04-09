@@ -27,6 +27,7 @@ import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
@@ -39,18 +40,13 @@ import javax.sql.DataSource;
  * @since bently 1.0
  */
 @Configuration
+@EnableWebMvc
 @ConditionalOnClass({ EnableTransactionManagement.class, EntityManager.class })
 @AutoConfigureAfter({ DataBaseConfiguration.class })
 public class MybatisConfiguration  implements EnvironmentAware {
 
     @Autowired
     private DataSource dataSource;
-
-    @Autowired
-    private SqlSessionFactory sqlSessionFactory;
-
-    @Autowired
-    private SqlSessionTemplate sessionTemplate;
 
     @Override
     public void setEnvironment(Environment environment) {
@@ -59,7 +55,7 @@ public class MybatisConfiguration  implements EnvironmentAware {
 
 
 
-    @Bean
+    @Bean(name = "sqlSessionFactory")
     @ConditionalOnMissingBean
     public SqlSessionFactory sqlSessionFactory() {
         try {

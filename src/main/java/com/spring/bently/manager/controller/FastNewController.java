@@ -14,9 +14,7 @@ import com.spring.bently.manager.db.model.Clubprofile;
 import com.spring.bently.manager.pagedata.BentlyResponse;
 import com.spring.bently.manager.service.fastnew.FastNewService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
@@ -34,7 +32,7 @@ public class FastNewController {
     @Autowired
     private FastNewService fastNewService;
 
-    @RequestMapping("/get/summary")
+    @RequestMapping("/summary")
     public BentlyResponse getSummary(){
         Clubprofile clubprofile = fastNewService.queryClubprofile();
         if(clubprofile == null ){
@@ -44,7 +42,7 @@ public class FastNewController {
         }
     }
 
-    @RequestMapping("/update/summary")
+    @RequestMapping("/updateSummary")
     public BentlyResponse<Clubprofile> updateSummary(){
         Clubprofile clubprofile = new Clubprofile();
         clubprofile.setContext("12222");
@@ -55,7 +53,7 @@ public class FastNewController {
         return response;
     }
 
-    @RequestMapping("/add/summary")
+    @RequestMapping("/addSummary")
     public BentlyResponse addSummary(){
         Clubprofile clubprofile = new Clubprofile();
         clubprofile.setContext("12222");
