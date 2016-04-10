@@ -11,6 +11,7 @@
 package com.spring.bently.manager.dao;
 
 import com.spring.bently.manager.model.User;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -29,5 +30,7 @@ public interface UserDao extends CrudRepository<User, Long> {
      */
     public User findByName(String name);
 
+
+    public User findByNameAndPassword(String name,String password);
 
 }

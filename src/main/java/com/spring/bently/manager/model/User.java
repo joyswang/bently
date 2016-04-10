@@ -50,7 +50,7 @@ public class User {
     /**
      * 是否是管理员
      */
-    @Column(length = 5)
+    @Column(length = 1)
     private Boolean isAdmin;
 
     public User(){}
