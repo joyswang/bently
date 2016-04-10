@@ -1,0 +1,42 @@
+<div ng-controller="YachtDestineCtrl">
+
+        <div  style="text-align: center;padding-top: 100px;" title="游艇预订列表" style="width:500px;height:150px;padding:10px;background:#fafafa;">
+            <div style="padding-bottom: 20px"></div>
+            <div ng-if="yachtDestineList.length == 0">没有数据哦</div>
+            <div ng-if="yachtDestineList.length !=0">
+                <table st-table="yachtDestineList"
+                       border="1" align="center">
+                    <caption>游艇预订列表</caption>
+                    <thead>
+                    <tr>
+                        <th width="10%">微信号</th>
+                        <th width="10%">微信名称</th>
+                        <th width="10%">预订时间</th>
+                        <th width="10%">创建时间</th>
+                        <th width="10%">是否处理</th>
+                        <th width="10%">预订天数</th>
+                        <th width="10%">处理人</th>
+                        <th width="10%">操作</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="yachtDestine in yachtDestineList">
+
+                        <td>{{yachtDestine.wechatid}}</td>
+                        <td>{{yachtDestine.wechatname}}</td>
+                        <td>{{yachtDestine.destinetime | date:'yyyy-MM-dd'}}</td>
+                        <td>{{yachtDestine.updateTime | date:'yyyy-MM-dd'}}</td>
+                        <td ng-if="yachtDestine.isHandle">是</td>
+                        <td ng-if="!yachtDestine.isHandle">否</td>
+                        <td>{{yachtDestine.daynum}}</td>
+                        <td>{{yachtDestine.handleuser}}</td>
+                        <td ng-if="yachtDestine.isHandle">已处理完成</td>
+                        <td ng-if="!yachtDestine.isHandle"><button ng-click="handle(yachtDestine.wechatid)">处理</button></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+</div>

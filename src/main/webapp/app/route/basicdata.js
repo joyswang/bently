@@ -18,5 +18,11 @@ angular.module('jtdscs.route')
             templateUrl : '/app/view/basicdata/club-activity-edit.html'
         }).when('/basicdata/clubActivityForm',{
             templateUrl : '/app/view/basicdata/club-activity-form.html'
+        }).when('/destine/hotelDestineList',{
+            templateUrl : '/app/view/destine/hotel-destine-list.html'
+        }).when('/destine/yachtDestineList',{
+            templateUrl : '/app/view/destine/yacht-destine-list.html'
+        }).when('/destine/activityDestineList',{
+            templateUrl : '/app/view/destine/activity-destine-list.html'
         });
     }]);

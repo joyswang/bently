@@ -43,7 +43,10 @@ public class DestineController {
     private HotelDestineDao hotelDestineDao;
 
     @Autowired
-    private ClubDynamicDao clubDynamicDao;
+    private YachtDestineDao yachtDestineDao;
+
+    @Autowired
+    private ActivityDestineDao activityDestineDao;
 
     @Autowired
     private UserActivityDao userActivityDao;
@@ -58,19 +61,6 @@ public class DestineController {
             list.add(iterable.next());
         }
         return BentlyResponse.success(list);
-    }
-
-    @RequestMapping("/update/hotel")
-    public BentlyResponse updateHotel(@RequestBody HotelDestine hotelDestine){
-        hotelDestine.setHandleuser("bentley");
-        hotelDestine.setUpdateTime(new Date());
-        HotelDestine result = hotelDestineDao.save(hotelDestine);
-        if(result == null){
-            return BentlyResponse.fail("保存数据异常，请稍后重试！");
-        }else{
-            return BentlyResponse.success(hotelDestine);
-        }
-
     }
 
     @RequestMapping("/handle/hotel")
@@ -88,6 +78,63 @@ public class DestineController {
         }
 
     }
+
+
+    @RequestMapping("/get/yachtList")
+    public BentlyResponse getYachtList(){
+        List<YachtDestine> list = Lists.newArrayList();
+        Iterator<YachtDestine> iterable = yachtDestineDao.findAll().iterator();
+        while(iterable.hasNext()){
+            list.add(iterable.next());
+        }
+        return BentlyResponse.success(list);
+    }
+
+    @RequestMapping("/handle/yacht")
+    public BentlyResponse handleYacht(String wechatid){
+
+        YachtDestine yachtDestine = yachtDestineDao.findBywechatid(wechatid);
+        yachtDestine.setIsHandle(true);
+        yachtDestine.setHandleuser("bentley");
+        yachtDestine.setUpdateTime(new Date());
+        YachtDestine result = yachtDestineDao.save(yachtDestine);
+        if(result == null){
+            return BentlyResponse.fail("更新数据异常，请稍后重试！");
+        }else{
+            return BentlyResponse.success(yachtDestine);
+        }
+
+    }
+
+
+    @RequestMapping("/get/activityDestineList")
+    public BentlyResponse getActivityList(){
+        List<ActivityDestine> list = Lists.newArrayList();
+        Iterator<ActivityDestine> iterable = activityDestineDao.findAll().iterator();
+        while(iterable.hasNext()){
+            list.add(iterable.next());
+        }
+        return BentlyResponse.success(list);
+    }
+
+    @RequestMapping("/handle/activityDestine")
+    public BentlyResponse handleActivity(String wechatid){
+
+        ActivityDestine activityDestine = activityDestineDao.findBywechatid(wechatid);
+        activityDestine.setIsHandle(true);
+        activityDestine.setHandleuser("bentley");
+        activityDestine.setUpdateTime(new Date());
+        ActivityDestine result = activityDestineDao.save(activityDestine);
+        if(result == null){
+            return BentlyResponse.fail("更新数据异常，请稍后重试！");
+        }else{
+            return BentlyResponse.success(activityDestine);
+        }
+
+    }
+
+
+
 
 //    @RequestMapping("/get/clubDynamic")
 //    public BentlyResponse getClubDynamic(long id){

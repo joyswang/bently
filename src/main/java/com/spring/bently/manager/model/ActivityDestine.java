@@ -11,6 +11,8 @@
 package com.spring.bently.manager.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -24,6 +26,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "activitydestine")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ActivityDestine {
 
     @Id
@@ -55,6 +58,12 @@ public class ActivityDestine {
      */
     @Column
     private Date destinetime;
+
+    /**
+     * 创建时间
+     */
+    @Column
+    private Date updateTime;
 
     /**
      * 办理人名称
@@ -125,6 +134,14 @@ public class ActivityDestine {
 
     public void setIsHandle(Boolean isHandle) {
         this.isHandle = isHandle;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }
 

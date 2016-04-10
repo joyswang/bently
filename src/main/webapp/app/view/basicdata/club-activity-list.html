@@ -1,12 +1,13 @@
 <div ng-controller="ClubActivityCtrl">
 
-        <div  style="text-align: center;padding-top: 100px;" title="俱乐部动态列表" style="width:500px;height:150px;padding:10px;background:#fafafa;">
+        <div  style="text-align: center;padding-top: 100px;" title="会员活动列表" style="width:500px;height:150px;padding:10px;background:#fafafa;">
             <a href="#/basicdata/clubActivityForm" >添加用户活动</a>
             <div style="padding-bottom: 20px"></div>
             <div ng-if="clubActivityList.length == 0">没有数据哦</div>
             <div ng-if="clubActivityList.length !=0">
                 <table st-table="clubActivityList"
                        border="1" align="center">
+                    <caption>酒店预订列表</caption>
                     <thead>
                     <tr>
                         <th width="10%">活动标题</th>
