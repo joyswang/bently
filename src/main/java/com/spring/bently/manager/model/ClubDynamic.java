@@ -45,7 +45,7 @@ public class ClubDynamic {
     private String context;
 
     /**
-     * 预订时间
+     * 更新时间
      */
     @Column
     private Date updateTime;

@@ -43,9 +43,7 @@ dependencies {
             "org.springframework.boot:spring-boot-starter-test",
             "org.springframework.boot:spring-boot-starter-web",
             'mysql:mysql-connector-java:5.1.36',
-
-
-
+            'com.google.guava:guava:19.0'
 
     )
     testCompile(

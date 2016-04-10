@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="/app/public/components/jeasyui/themes/default/easyui.css">
     <link rel="stylesheet" href="/app/public/components/jeasyui/themes/icon.css">
     <link rel="stylesheet" href="/app/public/components/jeasyui/themes/color.css">
+    <link rel="stylesheet" href="/app/public/components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/app/public/components/bootstrap/dist/css/bootstrap-theme.css">
 
     <script src="/app/public/components/jquery/dist/jquery.min.js"></script>
     <script src="/app/public/components/jeasyui/jquery.easyui.min.js"></script>
@@ -39,7 +41,7 @@
         </div>
         <div id="mm1">
             <div><a href="#/basicdata/shipcompany">俱乐部简介</a></div>
-            <div>俱乐部动态</div>
+            <div><a href="#/basicdata/clubdynamic">俱乐部动态</a></div>
             <div>会员活动回顾</div>
         </div>
         <div id="mm2">
@@ -71,11 +73,12 @@
 
 
 <!--controller-->
-<script src="controller/homectrl.js"></script>
-<script src="controller/basicdata/shipcompanyctrl.js"></script>
+<script src="/app/controller/homectrl.js"></script>
+<script src="/app/controller/basicdata/shipcompanyctrl.js"></script>
+<script src="/app/controller/basicdata/club-dynamic.js"></script>
 
 
 <!--route-->
-<script src="route/basicdata.js"></script>
+<script src="/app/route/basicdata.js"></script>
 </body>
 </html>

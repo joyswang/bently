@@ -1,20 +1,11 @@
 <div ng-controller="ShipCompanyCtrl">
 
-    <form id="ff" method="post">
+    <div style="text-align: center;padding-top: 100px;">
         <input hidden="true" ng-model="clubSummary.id"/>
         <div>
             <label >简介内容:</label>
-            <input class="easyui-textbox" data-options="multiline:true" value="{{clubSummary.context}}}" ng-model="clubSummary.context" style="width:300px;height:100px">
+            <input class="easyui-textbox" data-options="multiline:true" value="{{clubSummary.context}}" ng-model="clubSummary.context" style="width:300px;height:100px">
+            <button type="button" ng-click="updateSummary()" class="btn btn-primary btn-sm">保存</button>
         </div>
-
-        <div>
-
-            <a href="#" ng-click="updateSummary()" class="easyui-linkbutton">保 存</a>
-
-        </div>
-
-
-
-
-    </form>
+    </div>
 </div>
