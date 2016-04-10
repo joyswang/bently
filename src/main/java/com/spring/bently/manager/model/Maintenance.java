@@ -19,7 +19,7 @@ import java.util.Date;
 
 /**
  * 功能描述:  <p>
- * 游艇预订实体
+ * 预约保养实体
  * @author : yong.zou <p>
  * @version 1.0 2016-04-09
  * @since bently 1.0
@@ -70,6 +70,12 @@ public class Maintenance {
      */
     @Column(length = 5)
     private Boolean isHandle;
+
+    /**
+     * 创建时间
+     */
+    @Column
+    private Date updateTime;
 
     public Maintenance(){}
 
@@ -127,6 +133,14 @@ public class Maintenance {
 
     public void setIsHandle(Boolean isHandle) {
         this.isHandle = isHandle;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }
 

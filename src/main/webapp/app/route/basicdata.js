@@ -24,5 +24,13 @@ angular.module('jtdscs.route')
             templateUrl : '/app/view/destine/yacht-destine-list.html'
         }).when('/destine/activityDestineList',{
             templateUrl : '/app/view/destine/activity-destine-list.html'
+        }).when('/membercenter/washCarList',{
+            templateUrl : '/app/view/membercenter/washcar-list.html'
+        }).when('/membercenter/waxingList',{
+            templateUrl : '/app/view/membercenter/waxing-list.html'
+        }).when('/membercenter/maintenanceList',{
+            templateUrl : '/app/view/membercenter/maintenance-list.html'
+        }).when('/membercenter/rescueList',{
+            templateUrl : '/app/view/membercenter/rescue-list.html'
         });
     }]);

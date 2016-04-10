@@ -1,0 +1,41 @@
+<div ng-controller="WaxingCtrl">
+
+        <div  style="text-align: center;padding-top: 100px;" title="打蜡服务预订列表" style="width:500px;height:150px;padding:10px;background:#fafafa;">
+            <div style="padding-bottom: 20px"></div>
+            <div ng-if="waxingList.length == 0">没有数据哦</div>
+            <div ng-if="waxingList.length !=0">
+                <table st-table="waxingList"
+                       border="1" align="center">
+                    <caption>打蜡服务预订列表</caption>
+                    <thead>
+                    <tr>
+                        <th width="10%">微信号</th>
+                        <th width="10%">微信名称</th>
+                        <th width="10%">预订时间</th>
+                        <th width="10%">创建时间</th>
+                        <th width="10%">是否处理</th>
+                        <th width="10%">洗车地点</th>
+                        <th width="10%">处理人</th>
+                        <th width="10%">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="waxing in waxingList">
+
+                        <td>{{waxing.wechatid}}</td>
+                        <td>{{waxing.wechatname}}</td>
+                        <td>{{waxing.destinetime | date:'yyyy-MM-dd'}}</td>
+                        <td>{{waxing.updateTime | date:'yyyy-MM-dd'}}</td>
+                        <td ng-if="waxing.isHandle">是</td>
+                        <td ng-if="!waxing.isHandle">否</td>
+                        <td>{{waxing.address}}</td>
+                        <td>{{waxing.handleuser}}</td>
+                        <td ng-if="waxing.isHandle">已处理完成</td>
+                        <td ng-if="!waxing.isHandle"><button ng-click="handle(waxing.wechatid)">处理</button></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+</div>

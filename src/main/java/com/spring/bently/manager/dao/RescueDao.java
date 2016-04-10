@@ -10,7 +10,6 @@
  */
 package com.spring.bently.manager.dao;
 
-import com.spring.bently.manager.model.Member;
 import com.spring.bently.manager.model.Rescue;
 import org.springframework.data.repository.CrudRepository;
 
@@ -24,5 +23,6 @@ import org.springframework.data.repository.CrudRepository;
 public interface RescueDao extends CrudRepository<Rescue, Long> {
 
 
+    public Rescue findBywechatid(String wechatid);
 
 }

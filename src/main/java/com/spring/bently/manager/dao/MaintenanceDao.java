@@ -10,7 +10,6 @@
  */
 package com.spring.bently.manager.dao;
 
-import com.spring.bently.manager.model.HotelDestine;
 import com.spring.bently.manager.model.Maintenance;
 import org.springframework.data.repository.CrudRepository;
 
@@ -24,5 +23,6 @@ import org.springframework.data.repository.CrudRepository;
 public interface MaintenanceDao extends CrudRepository<Maintenance, Long> {
 
 
+    public Maintenance findBywechatid(String wechatid);
 
 }

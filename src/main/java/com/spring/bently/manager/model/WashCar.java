@@ -48,7 +48,7 @@ public class WashCar {
     private String wechatname;
 
     /**
-     * 时间
+     * 预订洗车时间
      */
     @Column
     private Date destinetime;
@@ -69,6 +69,13 @@ public class WashCar {
      * 是否办理
      */
     private Boolean isHandle;
+
+    /**
+     *  创建时间
+     */
+    @Column
+    private Date updateTime;
+
 
 
     public WashCar(){}
@@ -127,6 +134,14 @@ public class WashCar {
 
     public void setIsHandle(Boolean isHandle) {
         this.isHandle = isHandle;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }
 

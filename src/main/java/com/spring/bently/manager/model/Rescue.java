@@ -70,6 +70,12 @@ public class Rescue {
      */
     private Boolean isHandle;
 
+    /**
+     * 创建时间
+     */
+    @Column
+    private Date updateTime;
+
 
     public Rescue(){}
 
@@ -127,6 +133,14 @@ public class Rescue {
 
     public void setIsHandle(Boolean isHandle) {
         this.isHandle = isHandle;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }
 

@@ -11,11 +11,14 @@
 package com.spring.bently.manager.controller;
 
 import com.google.common.collect.Lists;
-import com.spring.bently.manager.dao.*;
-import com.spring.bently.manager.model.*;
+import com.spring.bently.manager.dao.ActivityDestineDao;
+import com.spring.bently.manager.dao.HotelDestineDao;
+import com.spring.bently.manager.dao.YachtDestineDao;
+import com.spring.bently.manager.model.ActivityDestine;
+import com.spring.bently.manager.model.HotelDestine;
+import com.spring.bently.manager.model.YachtDestine;
 import com.spring.bently.manager.pagedata.BentlyResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,12 +37,6 @@ import java.util.List;
 public class DestineController {
 
     @Autowired
-    private UserDao userDao;
-
-    @Autowired
-    private MemberDao memberDao;
-
-    @Autowired
     private HotelDestineDao hotelDestineDao;
 
     @Autowired
@@ -47,11 +44,6 @@ public class DestineController {
 
     @Autowired
     private ActivityDestineDao activityDestineDao;
-
-    @Autowired
-    private UserActivityDao userActivityDao;
-
-
 
     @RequestMapping("/get/hotelList")
     public BentlyResponse getHotelList(){
@@ -133,80 +125,6 @@ public class DestineController {
 
     }
 
-
-
-
-//    @RequestMapping("/get/clubDynamic")
-//    public BentlyResponse getClubDynamic(long id){
-//        ClubDynamic result = clubDynamicDao.findOne(id);
-//        if(result == null){
-//            return BentlyResponse.fail("数据查询异常，请稍后重试！");
-//        }else{
-//            return BentlyResponse.success(result);
-//        }
-//    }
-//
-//    @RequestMapping("/save/clubDynamic")
-//    public BentlyResponse saveClubDynamic(@RequestBody ClubDynamic clubDynamic){
-//
-//        clubDynamic.setHandleuser("yong.zou");
-//        clubDynamic.setUpdateTime(new Date());
-//        ClubDynamic result = clubDynamicDao.save(clubDynamic);
-//
-//        if(result == null){
-//            return BentlyResponse.fail("数据保存出错");
-//        }else{
-//            return BentlyResponse.success(result);
-//        }
-//
-//    }
-//
-//    @RequestMapping("/get/activityList")
-//    public BentlyResponse getActivityList(){
-//        List<UserActivity> list = Lists.newArrayList();
-//        Iterator<UserActivity> iterable = userActivityDao.findAll().iterator();
-//        while(iterable.hasNext()){
-//            list.add(iterable.next());
-//        }
-//        return BentlyResponse.success(list);
-//    }
-//
-//    @RequestMapping("/update/clubActivity")
-//    public BentlyResponse updateUserActivity(@RequestBody UserActivity userActivity){
-//        userActivity.setHandleuser("yong.zou");
-//        userActivity.setUpdateTime(new Date());
-//        UserActivity result = userActivityDao.save(userActivity);
-//        if(result == null){
-//            return BentlyResponse.fail("保存数据异常，请稍后重试！");
-//        }else{
-//            return BentlyResponse.success(result);
-//        }
-//
-//    }
-//
-//    @RequestMapping("/get/clubActivity")
-//    public BentlyResponse getUserActivity(long id){
-//        UserActivity result = userActivityDao.findOne(id);
-//        if(result == null){
-//            return BentlyResponse.fail("数据查询异常，请稍后重试！");
-//        }else{
-//            return BentlyResponse.success(result);
-//        }
-//    }
-//
-//    @RequestMapping("/save/clubActivity")
-//    public BentlyResponse saveClubDynamic(@RequestBody UserActivity userActivity){
-//
-//        userActivity.setHandleuser("yong.zou");
-//        userActivity.setUpdateTime(new Date());
-//        UserActivity result = userActivityDao.save(userActivity);
-//        if(result == null){
-//            return BentlyResponse.fail("数据保存出错");
-//        }else{
-//            return BentlyResponse.success(result);
-//        }
-//
-//    }
 
 
 }

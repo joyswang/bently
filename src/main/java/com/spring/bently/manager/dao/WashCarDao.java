@@ -10,7 +10,6 @@
  */
 package com.spring.bently.manager.dao;
 
-import com.spring.bently.manager.model.UserActivity;
 import com.spring.bently.manager.model.WashCar;
 import org.springframework.data.repository.CrudRepository;
 
@@ -22,6 +21,8 @@ import org.springframework.data.repository.CrudRepository;
  * @since bently 1.0
  */
 public interface WashCarDao extends CrudRepository<WashCar, Long> {
+
+    public WashCar findBywechatid(String wechatid);
 
 
 }
