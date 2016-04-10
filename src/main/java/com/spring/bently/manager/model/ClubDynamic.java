@@ -11,6 +11,8 @@
 package com.spring.bently.manager.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -24,6 +26,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "clubdynamic")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ClubDynamic {
 
     @Id
@@ -56,6 +59,16 @@ public class ClubDynamic {
     @Column(length = 20)
     private String handleuser;
 
+    @Override
+    public String toString() {
+        return "ClubDynamic{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", context='" + context + '\'' +
+                ", updateTime=" + updateTime +
+                ", handleuser='" + handleuser + '\'' +
+                '}';
+    }
 
     public long getId() {
         return id;

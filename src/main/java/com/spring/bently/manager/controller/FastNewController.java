@@ -84,7 +84,7 @@ public class FastNewController {
     }
 
     @RequestMapping("/update/clubDynamic")
-    public BentlyResponse updateClubDynamic(ClubDynamic clubDynamic){
+    public BentlyResponse updateClubDynamic(@RequestBody ClubDynamic clubDynamic){
         clubDynamic.setHandleuser("yong.zou");
         clubDynamic.setUpdateTime(new Date());
         ClubDynamic result = clubDynamicDao.save(clubDynamic);
@@ -104,18 +104,21 @@ public class FastNewController {
         }else{
             return BentlyResponse.success(result);
         }
-
     }
 
     @RequestMapping("/save/clubDynamic")
-    public BentlyResponse saveClubDynamic(long id){
-        List<ClubDynamic> list = Lists.newArrayList();
+    public BentlyResponse saveClubDynamic(@RequestBody ClubDynamic clubDynamic){
 
-        Iterator<ClubDynamic> iterable = clubDynamicDao.findAll().iterator();
-        if(iterable.hasNext()){
-            list.add(iterable.next());
+        clubDynamic.setHandleuser("yong.zou");
+        clubDynamic.setUpdateTime(new Date());
+        ClubDynamic result = clubDynamicDao.save(clubDynamic);
+
+        if(result == null){
+            return BentlyResponse.fail("数据保存出错");
+        }else{
+            return BentlyResponse.success(result);
         }
-        return BentlyResponse.success(list);
+
     }
 
 

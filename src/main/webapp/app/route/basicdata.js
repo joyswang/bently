@@ -8,5 +8,9 @@ angular.module('jtdscs.route')
             templateUrl: '/app/view/basicdata/shipcompany.html'
         }).when('/basicdata/clubdynamic',{
             templateUrl : '/app/view/basicdata/club-dynamic-list.html'
+        }).when('/basicdata/clubdynamicEdit/:id',{
+            templateUrl : '/app/view/basicdata/club-dynamic-edit.html'
+        }).when('/basicdata/clubdynamicForm',{
+            templateUrl : '/app/view/basicdata/club-dynamic-form.html'
         });
     }]);
