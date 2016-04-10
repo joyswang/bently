@@ -65,18 +65,16 @@
         <div ng-if="login === false" >
             <div class="easyui-panel" style="width:400px;">
                 <div style="padding:10px 60px 20px 60px">
-                    <form id="ff" method="post">
                         <table cellpadding="5">
                             <tr>
                                 <td>用户名:</td>
-                                <td><input class="easyui-textbox" type="text" ng-model="user.name"/></td>
+                                <td><input class="easyui-textbox" type="text"  ng-model="user.name"/></td>
                             </tr>
                             <tr>
                                 <td>密码:</td>
                                 <td><input class="easyui-textbox" type="password" ng-model="user.password"></td>
                             </tr>
                         </table>
-                    </form>
                     <div style="text-align:center;padding:5px">
                         <a class="easyui-linkbutton" ng-click="loginMethod()">登入</a>
                     </div>
