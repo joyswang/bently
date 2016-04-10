@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.*;
 
 /**
@@ -61,6 +62,7 @@ public class EntranceController {
     @RequestMapping(value = "/entrance", method = RequestMethod.POST)
     public void entrancePost(HttpServletRequest request, HttpServletResponse response) {
         log.info("post请求...");
+        Long start = System.currentTimeMillis() ;
 
         String msg = getMessagePost(request,response) ;
         if(msg == null) {
@@ -68,6 +70,10 @@ public class EntranceController {
         }else {
             responseMsg(msg,response) ;
         }
+
+        //responseMsg(ResponseUtils.textResponse(new HashMap<String,String>(),"测试"), response);
+        log.info(ResponseUtils.textResponse(new HashMap<String,String>(),"测试"));
+        log.info((System.currentTimeMillis() - start) + "");
     }
 
     //处理微信发送的请求
@@ -93,24 +99,26 @@ public class EntranceController {
     }
 
     private void responseMsg(String msg, HttpServletResponse response) {
-        //response.setContentType("application/xml");
+        response.setContentType("application/xml");
         response.setCharacterEncoding("UTF-8");
         //OutputStream outputStream = null ;
+        PrintWriter out = null ;
         try {
             //outputStream = response.getOutputStream() ;
             //outputStream.write(msg.getBytes("UTF-8"));
             //outputStream.flush();
-            response.getWriter().println(msg);
-            response.getWriter().flush();
+            out  = response.getWriter() ;
+            out.println(msg);
+            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
-            try {
+            //try {
                // outputStream.close();
-                response.getWriter().close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                out.close();
+           // } catch (IOException e) {
+           //     e.printStackTrace();
+           // }
         }
 
     }

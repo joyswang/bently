@@ -12,7 +12,12 @@ package com.spring.bently.manager.dao;
 
 import com.spring.bently.manager.model.ActivityDestine;
 import com.spring.bently.manager.model.ClubDynamic;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
 
 /**
  * 功能描述:  <p>
@@ -23,6 +28,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface ClubDynamicDao extends CrudRepository<ClubDynamic, Long> {
 
-
+    public Page<ClubDynamic> findAll(Pageable pageRequest) ;
 
 }

@@ -6,8 +6,8 @@ package com.spring.bently.wx.common;
 public enum EventEnum {
     subscribe,
     unsubscribe,
-    scan,
-    location,
-    click,
-    view;
+    SCAN,
+    LOCATION,
+    CLICK,
+    VIEW;
 }
