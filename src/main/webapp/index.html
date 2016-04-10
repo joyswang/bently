@@ -20,8 +20,8 @@
 </head>
 <body>
 
-<div class="easyui-layout" fit="true">
-    <div data-options="region:'north'" style="height:80px" ng-controller="HomeCtrl as ctrl">
+<div class="easyui-layout" fit="true"  ng-controller="HomeCtrl as ctrl">
+    <div data-options="region:'north'" style="height:80px">
         <div class="easyui-panel" style="padding:5px; line-height: 30px;">
             <span style="font-size: 16px; font-weight: bold;">宾利俱乐部管理平台</span>
             <div style="font-size: 16px;float: right;">
@@ -59,7 +59,7 @@
         </div>
     </div>
 
-    <div data-options="region:'center',iconCls:'icon-ok'" fit="true" ng-controller="HomeCtrl">
+    <div data-options="region:'center',iconCls:'icon-ok'" fit="true">
         <div ng-view ng-if="login === true" ></div>
 
         <div ng-if="login === false" >
