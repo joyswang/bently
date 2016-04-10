@@ -23,6 +23,8 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface HotelDestineDao extends CrudRepository<HotelDestine, Long> {
 
+    public HotelDestine findBywechatid(String wechatid);
+
 
 
 }

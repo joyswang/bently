@@ -12,10 +12,7 @@ package com.spring.bently.manager.controller;
 
 import com.google.common.collect.Lists;
 import com.spring.bently.manager.dao.*;
-import com.spring.bently.manager.model.ClubDynamic;
-import com.spring.bently.manager.model.ClubSummary;
-import com.spring.bently.manager.model.HotelDestine;
-import com.spring.bently.manager.model.UserActivity;
+import com.spring.bently.manager.model.*;
 import com.spring.bently.manager.pagedata.BentlyResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,6 +35,9 @@ public class DestineController {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private MemberDao memberDao;
 
     @Autowired
     private HotelDestineDao hotelDestineDao;
@@ -63,10 +63,26 @@ public class DestineController {
     @RequestMapping("/update/hotel")
     public BentlyResponse updateHotel(@RequestBody HotelDestine hotelDestine){
         hotelDestine.setHandleuser("bentley");
-        hotelDestine.setUpdateTiem(new Date());
+        hotelDestine.setUpdateTime(new Date());
         HotelDestine result = hotelDestineDao.save(hotelDestine);
         if(result == null){
             return BentlyResponse.fail("保存数据异常，请稍后重试！");
+        }else{
+            return BentlyResponse.success(hotelDestine);
+        }
+
+    }
+
+    @RequestMapping("/handle/hotel")
+    public BentlyResponse handleHotel(String wechatid){
+
+        HotelDestine hotelDestine = hotelDestineDao.findBywechatid(wechatid);
+        hotelDestine.setIsHandle(true);
+        hotelDestine.setHandleuser("bentley");
+        hotelDestine.setUpdateTime(new Date());
+        HotelDestine result = hotelDestineDao.save(hotelDestine);
+        if(result == null){
+            return BentlyResponse.fail("更新数据异常，请稍后重试！");
         }else{
             return BentlyResponse.success(hotelDestine);
         }

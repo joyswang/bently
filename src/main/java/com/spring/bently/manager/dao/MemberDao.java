@@ -23,6 +23,8 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface MemberDao extends CrudRepository<Member, Long> {
 
+    public Member findByWechatid(String wechatid);
+
 
 
 }

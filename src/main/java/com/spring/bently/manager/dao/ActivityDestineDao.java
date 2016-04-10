@@ -11,7 +11,6 @@
 package com.spring.bently.manager.dao;
 
 import com.spring.bently.manager.model.ActivityDestine;
-import com.spring.bently.manager.model.User;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -23,6 +22,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface ActivityDestineDao extends CrudRepository<ActivityDestine, Long> {
 
-
+    public ActivityDestine findBywechatid(String wechatid);
 
 }

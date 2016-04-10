@@ -10,7 +10,6 @@
  */
 package com.spring.bently.manager.dao;
 
-import com.spring.bently.manager.model.Waxing;
 import com.spring.bently.manager.model.YachtDestine;
 import org.springframework.data.repository.CrudRepository;
 
@@ -23,5 +22,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface YachtDestineDao extends CrudRepository<YachtDestine, Long> {
 
+    public YachtDestine findBywechatid(String wechatid);
 
 }

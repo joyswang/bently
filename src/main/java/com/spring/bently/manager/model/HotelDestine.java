@@ -62,9 +62,9 @@ public class HotelDestine {
     private String handleuser;
 
     /**
-     * 预订时间
+     * 创建
      */
-    private Date updateTiem;
+    private Date updateTime;
 
     /**
      * 是否办理
@@ -130,12 +130,12 @@ public class HotelDestine {
         this.isHandle = isHandle;
     }
 
-    public Date getUpdateTiem() {
-        return updateTiem;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdateTiem(Date updateTiem) {
-        this.updateTiem = updateTiem;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }
 

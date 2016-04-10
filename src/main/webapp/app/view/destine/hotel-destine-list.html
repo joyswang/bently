@@ -1,0 +1,38 @@
+<div ng-controller="HotelDestineCtrl">
+
+        <div  style="text-align: center;padding-top: 100px;" title="俱乐部动态列表" style="width:500px;height:150px;padding:10px;background:#fafafa;">
+            <div style="padding-bottom: 20px"></div>
+            <div ng-if="hotelDestineList.length == 0">没有数据哦</div>
+            <div ng-if="hotelDestineList.length !=0">
+                <table st-table="clubActivityList"
+                       border="1" align="center">
+                    <thead>
+                    <tr>
+                        <th width="10%">微信号</th>
+                        <th width="10%">微信名称</th>
+                        <th width="10%">预订时间</th>
+                        <th width="10%">创建时间</th>
+                        <th width="10%">是否处理</th>
+                        <th width="10%">预订天数</th>
+                        <th width="10%">操作</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="hotelDestine in hotelDestineList">
+
+                        <td>{{hotelDestine.wechatid}}</td>
+                        <td>{{hotelDestine.wechatname}}</td>
+                        <td>{{hotelDestine.destinetime}}</td>
+                        <td ng-if="">{{hotelDestine.destinetime}}</td>
+
+                        <td><a class="remove-underline" href="#/basicdata/clubActivityEdit/{{clubActivity.id}}">{{clubActivity.title}}</a></td>
+                        <td>{{hotelDestine.updateTime | date:'yyyy-MM-dd'}}</td>
+                        <td>{{hotelDestine.handleuser}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+</div>
