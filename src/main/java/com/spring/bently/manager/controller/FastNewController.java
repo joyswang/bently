@@ -13,10 +13,12 @@ package com.spring.bently.manager.controller;
 import com.google.common.collect.Lists;
 import com.spring.bently.manager.dao.ClubDynamicDao;
 import com.spring.bently.manager.dao.ClubSummaryDao;
+import com.spring.bently.manager.dao.UserActivityDao;
 import com.spring.bently.manager.dao.UserDao;
 import com.spring.bently.manager.model.ClubDynamic;
 import com.spring.bently.manager.model.ClubSummary;
 import com.spring.bently.manager.model.User;
+import com.spring.bently.manager.model.UserActivity;
 import com.spring.bently.manager.pagedata.BentlyResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,6 +48,9 @@ public class FastNewController {
     @Autowired
     private ClubDynamicDao clubDynamicDao;
 
+    @Autowired
+    private UserActivityDao userActivityDao;
+
     @RequestMapping("/get/summary")
     public BentlyResponse getSummary(){
         ClubSummary clubSummary = new ClubSummary();
@@ -66,7 +71,7 @@ public class FastNewController {
             return BentlyResponse.fail("数据异常，请稍后重试！");
         }else{
             clubSummary.setUpdateTime(new Date());
-            clubSummary.setHandleuser("yong.zou");
+            clubSummary.setHandleuser("bentley");
             ClubSummary result = clubSummaryDao.save(clubSummary);
             return BentlyResponse.success(result);
         }
@@ -77,7 +82,7 @@ public class FastNewController {
     public BentlyResponse getClubDynamicList(){
         List<ClubDynamic> list = Lists.newArrayList();
         Iterator<ClubDynamic> iterable = clubDynamicDao.findAll().iterator();
-        if(iterable.hasNext()){
+        while(iterable.hasNext()){
             list.add(iterable.next());
         }
         return BentlyResponse.success(list);
@@ -85,7 +90,7 @@ public class FastNewController {
 
     @RequestMapping("/update/clubDynamic")
     public BentlyResponse updateClubDynamic(@RequestBody ClubDynamic clubDynamic){
-        clubDynamic.setHandleuser("yong.zou");
+        clubDynamic.setHandleuser("bentley");
         clubDynamic.setUpdateTime(new Date());
         ClubDynamic result = clubDynamicDao.save(clubDynamic);
         if(result == null){
@@ -109,7 +114,7 @@ public class FastNewController {
     @RequestMapping("/save/clubDynamic")
     public BentlyResponse saveClubDynamic(@RequestBody ClubDynamic clubDynamic){
 
-        clubDynamic.setHandleuser("yong.zou");
+        clubDynamic.setHandleuser("bentley");
         clubDynamic.setUpdateTime(new Date());
         ClubDynamic result = clubDynamicDao.save(clubDynamic);
 
@@ -121,8 +126,52 @@ public class FastNewController {
 
     }
 
+    @RequestMapping("/get/activityList")
+    public BentlyResponse getActivityList(){
+        List<UserActivity> list = Lists.newArrayList();
+        Iterator<UserActivity> iterable = userActivityDao.findAll().iterator();
+        while(iterable.hasNext()){
+            list.add(iterable.next());
+        }
+        return BentlyResponse.success(list);
+    }
 
+    @RequestMapping("/update/clubActivity")
+    public BentlyResponse updateUserActivity(@RequestBody UserActivity userActivity){
+        userActivity.setHandleuser("bentley");
+        userActivity.setUpdateTime(new Date());
+        UserActivity result = userActivityDao.save(userActivity);
+        if(result == null){
+            return BentlyResponse.fail("保存数据异常，请稍后重试！");
+        }else{
+            return BentlyResponse.success(result);
+        }
 
+    }
+
+    @RequestMapping("/get/clubActivity")
+    public BentlyResponse getUserActivity(long id){
+        UserActivity result = userActivityDao.findOne(id);
+        if(result == null){
+            return BentlyResponse.fail("数据查询异常，请稍后重试！");
+        }else{
+            return BentlyResponse.success(result);
+        }
+    }
+
+    @RequestMapping("/save/clubActivity")
+    public BentlyResponse saveClubDynamic(@RequestBody UserActivity userActivity){
+
+        userActivity.setHandleuser("bentley");
+        userActivity.setUpdateTime(new Date());
+        UserActivity result = userActivityDao.save(userActivity);
+        if(result == null){
+            return BentlyResponse.fail("数据保存出错");
+        }else{
+            return BentlyResponse.success(result);
+        }
+
+    }
 
 
 }

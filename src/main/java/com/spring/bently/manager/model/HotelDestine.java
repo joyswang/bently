@@ -62,6 +62,11 @@ public class HotelDestine {
     private String handleuser;
 
     /**
+     * 预订时间
+     */
+    private Date updateTiem;
+
+    /**
      * 是否办理
      */
     @Column(length = 5)
@@ -123,6 +128,14 @@ public class HotelDestine {
 
     public void setIsHandle(Boolean isHandle) {
         this.isHandle = isHandle;
+    }
+
+    public Date getUpdateTiem() {
+        return updateTiem;
+    }
+
+    public void setUpdateTiem(Date updateTiem) {
+        this.updateTiem = updateTiem;
     }
 }
 

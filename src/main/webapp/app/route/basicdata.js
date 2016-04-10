@@ -12,5 +12,11 @@ angular.module('jtdscs.route')
             templateUrl : '/app/view/basicdata/club-dynamic-edit.html'
         }).when('/basicdata/clubdynamicForm',{
             templateUrl : '/app/view/basicdata/club-dynamic-form.html'
+        }).when('/basicdata/clubactivity',{
+            templateUrl : '/app/view/basicdata/club-activity-list.html'
+        }).when('/basicdata/clubActivityEdit/:id',{
+            templateUrl : '/app/view/basicdata/club-activity-edit.html'
+        }).when('/basicdata/clubActivityForm',{
+            templateUrl : '/app/view/basicdata/club-activity-form.html'
         });
     }]);

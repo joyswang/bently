@@ -42,7 +42,7 @@ public class UserActivity {
      * 活动内容
      */
     @Column(length = 1000)
-    private String wechatname;
+    private String context;
 
     /**
      * 活动开始时间
@@ -86,14 +86,6 @@ public class UserActivity {
         this.title = title;
     }
 
-    public String getWechatname() {
-        return wechatname;
-    }
-
-    public void setWechatname(String wechatname) {
-        this.wechatname = wechatname;
-    }
-
     public Date getStartTime() {
         return startTime;
     }
@@ -124,6 +116,14 @@ public class UserActivity {
 
     public void setHandleuser(String handleuser) {
         this.handleuser = handleuser;
+    }
+
+    public String getContext() {
+        return context;
+    }
+
+    public void setContext(String context) {
+        this.context = context;
     }
 }
 

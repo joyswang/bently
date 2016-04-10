@@ -40,7 +40,7 @@
         <div id="mm1">
             <div><a href="#/basicdata/shipcompany">俱乐部简介</a></div>
             <div ><a href="#/basicdata/clubdynamic">俱乐部动态</a></div>
-            <div>会员活动回顾</div>
+            <div><a href="#/basicdata/clubactivity">会员活动回顾</a></div>
         </div>
         <div id="mm2">
             <div>酒店预订</div>
@@ -60,28 +60,8 @@
     </div>
 
     <div data-options="region:'center',iconCls:'icon-ok'" fit="true">
-        <div ng-view ng-if="login === true" ></div>
+        <div ng-view></div>
 
-        <div ng-if="login === false" >
-            <div class="easyui-panel" style="width:400px;">
-                <div style="padding:10px 60px 20px 60px">
-                        <table cellpadding="5">
-                            <tr>
-                                <td>用户名:</td>
-                                <td><input class="easyui-textbox" type="text"  ng-model="user.name"/></td>
-                            </tr>
-                            <tr>
-                                <td>密码:</td>
-                                <td><input class="easyui-textbox" type="password" ng-model="user.password"></td>
-                            </tr>
-                        </table>
-                    <div style="text-align:center;padding:5px">
-                        <a class="easyui-linkbutton" ng-click="loginMethod()">登入</a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
 
     </div>
 
@@ -100,6 +80,9 @@
 <script src="/app/controller/basicdata/club-dynamic.js"></script>
 <script src="/app/controller/basicdata/club-dynamic-edit.js"></script>
 <script src="/app/controller/basicdata/club-dynamic-form.js"></script>
+<script src="/app/controller/basicdata/club-activity-list.js"></script>
+<script src="/app/controller/basicdata/club-activity-edit.js"></script>
+<script src="/app/controller/basicdata/club-activity-form.js"></script>
 
 
 <!--route-->

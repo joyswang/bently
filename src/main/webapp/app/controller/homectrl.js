@@ -7,7 +7,10 @@
     app.controller('HomeCtrl', ['$scope','$http',HomeCtrl]);
     function HomeCtrl($scope,$http) {
 
-        $scope.user ={};
+        $scope.user ={
+            name:'',
+            password:''
+        };
         $scope.login = false;
         $http.get("home").then(function(data){
             if(data.data.success){
@@ -19,8 +22,13 @@
             }
 
         });
-        $scope.loginMethod = function(){
-            $http.post('login',$scope.user).then(function(data){
+
+
+        $scope.loginMethod = function(user){
+
+            console.log(user);
+
+            $http.post('login',user).then(function(data){
                 if(data.data.success){
                     $scope.user =data.data.data;
                     $scope.login = true;
@@ -31,7 +39,7 @@
             });
         };
         var self = this;
-        self.username = $scope.user.name;
+        self.username = '未登入';
         self.login = function () {
             self.username = $scope.user.name;
 
