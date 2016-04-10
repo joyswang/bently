@@ -40,7 +40,7 @@ public class MyTest {
         CustomHttpConnection connection = new CustomHttpConnection(hcc) ;
         StringBuffer buf = new StringBuffer() ;
 
-        buf.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>") ;
+       // buf.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>") ;
         buf.append("<xml>");
         buf.append("<ToUserName><![CDATA[gh_6f1ea73d1913]]></ToUserName>");
         buf.append("<FromUserName><![CDATA[oygVcwB3xFoQqOTklmOBcdyiMU50]]></FromUserName>");

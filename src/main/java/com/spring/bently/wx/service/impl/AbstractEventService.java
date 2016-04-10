@@ -21,14 +21,14 @@ public abstract class AbstractEventService implements IEventService {
                 return subscribeEvent(map) ;
             case unsubscribe:
                 return unsubscribeEvent(map) ;
-            case scan:
+            case SCAN:
                 return scanEvent(map) ;
-            case location:
+            case LOCATION:
                 return locationEvent(map) ;
-            case click:
+            case CLICK:
 
                 return clickEvent(map) ;
-            case view:
+            case VIEW:
                 return viewEvent(map) ;
             default:
                 return ResponseUtils.textResponse(map,"正在开发中...") ;

@@ -30,6 +30,7 @@ public class EntranceService implements IEntranceService {
         }
 
         String event = map.get("msgtype") ;
+        log.info("event = " + event);
         String msg = "" ;
 
         switch (MsgTypeEnum.valueOf(event)) {
@@ -56,7 +57,7 @@ public class EntranceService implements IEntranceService {
                 return ResponseUtils.textResponse(map,"正在开发中...") ;
         }
 
-        log.info("event = " + event);
+
 
         return msg;
     }

@@ -80,6 +80,16 @@ public class ClubSummary {
     public void setHandleuser(String handleuser) {
         this.handleuser = handleuser;
     }
+
+    @Override
+    public String toString() {
+        return "ClubSummary{" +
+                "id=" + id +
+                ", context='" + context + '\'' +
+                ", updateTime=" + updateTime +
+                ", handleuser='" + handleuser + '\'' +
+                '}';
+    }
 }
 
 

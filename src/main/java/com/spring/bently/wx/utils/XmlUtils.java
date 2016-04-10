@@ -28,7 +28,7 @@ public class XmlUtils {
             Element root = document.getRootElement() ;
             for(Iterator it = root.elementIterator();it.hasNext();) {
                 Element element = (Element) it.next() ;
-                map.put(element.getName().toLowerCase(),element.getText().toLowerCase()) ;
+                map.put(element.getName().toLowerCase(),element.getText()) ;
             }
         } catch (DocumentException e) {
             e.printStackTrace();
