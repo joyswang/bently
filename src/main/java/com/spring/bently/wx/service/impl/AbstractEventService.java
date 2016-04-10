@@ -2,6 +2,7 @@ package com.spring.bently.wx.service.impl;
 
 import com.spring.bently.wx.common.EventEnum;
 import com.spring.bently.wx.service.IEventService;
+import com.spring.bently.wx.utils.ResponseUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -30,7 +31,7 @@ public abstract class AbstractEventService implements IEventService {
             case view:
                 return viewEvent(map) ;
             default:
-                return "正在开发中" ;
+                return ResponseUtils.textResponse(map,"正在开发中...") ;
         }
     }
     //点击菜单事件

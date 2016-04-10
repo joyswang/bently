@@ -2,9 +2,11 @@ package com.spring.bently.wx.utils;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -22,6 +24,7 @@ public class XmlUtils {
         Map<String,String> map = new HashMap<String,String>() ;
         try {
             Document document = reader.read(inputStream) ;
+            System.out.println(document.asXML());
             Element root = document.getRootElement() ;
             for(Iterator it = root.elementIterator();it.hasNext();) {
                 Element element = (Element) it.next() ;
@@ -29,13 +32,37 @@ public class XmlUtils {
             }
         } catch (DocumentException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         return map ;
     }
 
-    public static void mapToXml(Map map) {
+    public static String mapToXml(Map<String,Object> map) {
 
+        StringBuilder sb = new StringBuilder("<xml>") ;
+
+        for(String key : map.keySet()) {
+
+            sb.append("<").append(key).append(">") ;
+            Object value = map.get(key) ;
+            if(value instanceof String) {
+                sb.append("![CDATA[").append(value).append("]]") ;
+            }else if(value instanceof Integer) {
+                sb.append(value) ;
+            }else if(value instanceof Long) {
+                sb.append(value) ;
+            }
+            sb.append("</").append(key).append(">") ;
+        }
+        sb.append("</xml>") ;
+
+        return sb.toString() ;
 
     }
 }

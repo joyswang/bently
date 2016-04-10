@@ -1,6 +1,7 @@
 package com.wx.test;
 
 import com.spring.bently.wx.utils.WeixinPropertiesUtils;
+import com.spring.bently.wx.utils.httptool.CustomHttpConnection;
 import com.spring.bently.wx.utils.httptool.CustomHttpsConnection;
 import com.spring.bently.wx.utils.httptool.HttpConnectionCommon;
 import org.junit.Test;
@@ -8,11 +9,13 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Calendar;
+
 /**
  * Created by wgq on 16-4-2.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@SpringApplicationConfiguration
 public class MyTest {
 
     @Test
@@ -30,8 +33,25 @@ public class MyTest {
         System.out.println(WeixinPropertiesUtils.getProperties("access_token"));
     }
 
-    public static void main(String[] args) {
-        MyTest m     = new MyTest() ;
-        m.testHttps() ;
+    @Test
+    public void testReturn() {
+        HttpConnectionCommon hcc =
+                new HttpConnectionCommon("http://wgq.tunnel.qydev.com/entrance", "POST") ;
+        CustomHttpConnection connection = new CustomHttpConnection(hcc) ;
+        StringBuffer buf = new StringBuffer() ;
+
+        buf.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>") ;
+        buf.append("<xml>");
+        buf.append("<ToUserName><![CDATA[gh_6f1ea73d1913]]></ToUserName>");
+        buf.append("<FromUserName><![CDATA[oygVcwB3xFoQqOTklmOBcdyiMU50]]></FromUserName>");
+        buf.append("<CreateTime>1460230912</CreateTime>");
+        buf.append("<MsgType><![CDATA[event]]></MsgType>");
+        buf.append("<Event><![CDATA[CLICK]]></Event>");
+        buf.append("<EventKey><![CDATA[ykt_destine]]></EventKey>");
+        buf.append("</xml>");
+
+        String message = connection.httpClient(buf.toString()) ;
+        System.out.println(message);
+
     }
 }

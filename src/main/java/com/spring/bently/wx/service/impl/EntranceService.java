@@ -3,6 +3,7 @@ package com.spring.bently.wx.service.impl;
 import com.spring.bently.wx.common.MsgTypeEnum;
 import com.spring.bently.wx.service.IEntranceService;
 import com.spring.bently.wx.service.IEventService;
+import com.spring.bently.wx.utils.ResponseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,25 +35,25 @@ public class EntranceService implements IEntranceService {
         switch (MsgTypeEnum.valueOf(event)) {
 
             case image:
-                return "正在开发中" ;
+                return ResponseUtils.textResponse(map, "正在开发中...") ;
             case text:
-                return "正在开发中" ;
+                return ResponseUtils.textResponse(map,"正在开发中...") ;
             case voice:
-                return "正在开发中" ;
+                return ResponseUtils.textResponse(map,"正在开发中...") ;
             case video:
-                return "正在开发中" ;
+                return ResponseUtils.textResponse(map,"正在开发中...") ;
             case shortvideo:
-                return "正在开发中" ;
+                return ResponseUtils.textResponse(map,"正在开发中...") ;
             case location:
-                return "正在开发中" ;
+                return ResponseUtils.textResponse(map,"正在开发中...") ;
             case link:
-                return "正在开发中" ;
+                return ResponseUtils.textResponse(map,"正在开发中...") ;
             case event:
                 log.info("进入event事件中......");
                 msg = eventService.event(map) ;
                 break;
             default:
-                return "正在开发中" ;
+                return ResponseUtils.textResponse(map,"正在开发中...") ;
         }
 
         log.info("event = " + event);
