@@ -32,5 +32,9 @@ angular.module('jtdscs.route')
             templateUrl : '/app/view/membercenter/maintenance-list.html'
         }).when('/membercenter/rescueList',{
             templateUrl : '/app/view/membercenter/rescue-list.html'
+        }).when('/membercenter/memberList',{
+            templateUrl : '/app/view/membercenter/member-manager-list.html'
+        }).when('/membercenter/memberEdit/:id',{
+            templateUrl : '/app/view/membercenter/member-edit.html'
         });
     }]);

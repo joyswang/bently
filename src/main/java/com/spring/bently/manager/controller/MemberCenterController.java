@@ -14,13 +14,16 @@ import com.google.common.collect.Lists;
 import com.spring.bently.manager.dao.*;
 import com.spring.bently.manager.model.*;
 import com.spring.bently.manager.pagedata.BentlyResponse;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import org.slf4j.Logger;
 
 /**
  * 功能描述:  <p>
@@ -47,7 +50,7 @@ public class MemberCenterController {
     @Autowired
     private RescueDao rescueDao;
 
-
+    private static Logger logger = LoggerFactory.getLogger(MemberCenterController.class);
 
     @RequestMapping("/get/washCarList")
     public BentlyResponse getHotelList(){
@@ -109,11 +112,11 @@ public class MemberCenterController {
         if(member == null){
             return BentlyResponse.fail("会员不存在!");
         }
-        int num = member.getWashcarnum();
+        int num = member.getWaxingnum();
         if(num<=0){
             return BentlyResponse.fail("剩余打蜡次数为0,不能操作!");
         }
-        member.setWashcarnum(num-1);
+        member.setWaxingnum(num-1);
         Member memberResult = memberDao.save(member);
         if(memberResult == null){
             return BentlyResponse.fail("保存打蜡次数失败!");
@@ -150,11 +153,11 @@ public class MemberCenterController {
         if(member == null){
             return BentlyResponse.fail("会员不存在!");
         }
-        int num = member.getWashcarnum();
+        int num = member.getMaintenancenum();
         if(num<=0){
             return BentlyResponse.fail("剩余保养次数为0,不能操作!");
         }
-        member.setWashcarnum(num-1);
+        member.setMaintenancenum(num-1);
         Member memberResult = memberDao.save(member);
         if(memberResult == null){
             return BentlyResponse.fail("保存保养次数失败!");
@@ -191,11 +194,11 @@ public class MemberCenterController {
         if(member == null){
             return BentlyResponse.fail("会员不存在!");
         }
-        int num = member.getWashcarnum();
+        int num = member.getIndoorrenum();
         if(num<=0){
             return BentlyResponse.fail("剩余市内救援次数为0,不能操作!");
         }
-        member.setWashcarnum(num-1);
+        member.setIndoorrenum(num-1);
         Member memberResult = memberDao.save(member);
         if(memberResult == null){
             return BentlyResponse.fail("保存市内救援次数失败!");
@@ -212,6 +215,48 @@ public class MemberCenterController {
         }
 
     }
+
+    @RequestMapping("/get/memberList")
+    public BentlyResponse getMemberList(){
+        List<Member> list = Lists.newArrayList();
+        Iterator<Member> iterable = memberDao.findAll().iterator();
+        while(iterable.hasNext()){
+            list.add(iterable.next());
+        }
+        return BentlyResponse.success(list);
+    }
+
+    @RequestMapping("/get/member")
+    public BentlyResponse getMember(long id){
+
+        Member member =  memberDao.findOne(id);
+        if(member == null){
+            return BentlyResponse.fail("会员用户不存在");
+        }else{
+            return BentlyResponse.success(member);
+        }
+    }
+
+    @RequestMapping("/update/member")
+    public BentlyResponse updateMemberList(@RequestBody Member member){
+        Member dbMember = memberDao.findOne(member.getId());
+        dbMember.setEndTime(member.getEndTime());
+        dbMember.setIndoorrenum(member.getIndoorrenum());
+        dbMember.setIsVip(member.getIsVip());
+        dbMember.setStartTime(member.getStartTime());
+        dbMember.setWashcarnum(member.getWashcarnum());
+        dbMember.setWaxingnum(member.getWaxingnum());
+        dbMember.setMaintenancenum(member.getMaintenancenum());
+        Member result = memberDao.save(dbMember);
+        if(result == null){
+            return BentlyResponse.fail("更新会员数据失败，请稍后重试！");
+        }else{
+            logger.info("会员信息操作:"+dbMember.toString());
+            return BentlyResponse.success(result);
+        }
+    }
+
+
 
 
 }

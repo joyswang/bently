@@ -79,6 +79,12 @@ public class Member {
     private int indoorrenum;
 
     /**
+     * 免费保养剩余次数
+     */
+    @Column(length = 10)
+    private int maintenancenum;
+
+    /**
      * 是否会员 true 是， FALSE不是
      */
     @Column
@@ -156,6 +162,30 @@ public class Member {
 
     public void setIsVip(Boolean isVip) {
         this.isVip = isVip;
+    }
+
+    public int getMaintenancenum() {
+        return maintenancenum;
+    }
+
+    public void setMaintenancenum(int maintenancenum) {
+        this.maintenancenum = maintenancenum;
+    }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", wechatid='" + wechatid + '\'' +
+                ", wechatname='" + wechatname + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", washcarnum=" + washcarnum +
+                ", waxingnum=" + waxingnum +
+                ", indoorrenum=" + indoorrenum +
+                ", maintenancenum=" + maintenancenum +
+                ", isVip=" + isVip +
+                '}';
     }
 }
 
