@@ -37,7 +37,7 @@ public class User {
      */
     @NotNull
     @Column(length = 20)
-    private String passowrd;
+    private String password;
 
     // The user's name
     /**
@@ -63,12 +63,12 @@ public class User {
         this.id = id;
     }
 
-    public String getPassowrd() {
-        return passowrd;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassowrd(String passowrd) {
-        this.passowrd = passowrd;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getName() {

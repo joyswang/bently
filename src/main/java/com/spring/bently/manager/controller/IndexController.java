@@ -58,14 +58,14 @@ public class IndexController {
         if(user == null){
             return  BentlyResponse.fail("用户未登入");
         }
-        user.setPassowrd("");
+        user.setPassword("");
         return BentlyResponse.success(user);
     }
 
     @RequestMapping("/login")
     public BentlyResponse login(@RequestBody User user,HttpServletRequest request,HttpServletResponse response){
 
-        User result = userDao.findByNameAndPassword(user.getName(),user.getPassowrd());
+        User result = userDao.findByNameAndPassword(user.getName(),user.getPassword());
 
         if(result == null){
             return BentlyResponse.fail("用户名或密码错误");
