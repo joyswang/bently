@@ -1,10 +1,11 @@
 package com.spring.bently.wx.utils;
 
-import com.spring.bently.manager.model.ClubDynamic;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wgq on 16-4-10.
@@ -53,11 +54,14 @@ public class ResponseUtils {
                 if(context.length()>200) {
                     context = context.substring(0,200) ;
                 }
+
+                Method getId = t.getClass().getDeclaredMethod("getId") ;
+                String id = String.valueOf(getId.invoke(t)) ;
                 sb.append("<item>");
                 sb.append("<Title><![CDATA[" + title +"]]></Title>");
                 sb.append("<Description><![CDATA[" + context + "...]]></Description>");
                // sb.append("<PicUrl><![CDATA[]]></PicUrl>");
-              //  sb.append("<Url><![CDATA[]]></Url>");
+                sb.append("<Url><![CDATA[http://wgq.tunnel.qydev.com/wx/club/dynamic?id=" + id +"]]></Url>");
                 sb.append("</item>");
 
             } catch (NoSuchMethodException e) {
