@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -53,8 +52,15 @@ public class AccessTokenSchedule {
         String errcode = map.get("errcode")==null?"":map.get("errcode").toString() ;
         if(StringUtils.isEmpty(errcode)) {
 
-            AccessToken accessToken = accessTokenDao.findOne(1L);
+            List<AccessToken> list = accessTokenDao.findByType("normal") ;
+            AccessToken accessToken = null ;
+            if(list == null || list.size() == 0) {
+                accessToken = new AccessToken() ;
+            }
+
+            accessToken = list.get(0);
             accessToken.setAccesstoken(map.get("access_token").toString());
+            //accessToken.setType("normal");
             accessTokenDao.save(accessToken) ;
             //WeixinPropertiesUtils.setProperties("access_token",map.get("access_token").toString());
         }

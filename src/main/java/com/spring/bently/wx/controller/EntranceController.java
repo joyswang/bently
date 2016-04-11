@@ -1,28 +1,24 @@
 package com.spring.bently.wx.controller;
 
 import com.spring.bently.wx.service.IEntranceService;
-import com.spring.bently.wx.utils.ResponseUtils;
 import com.spring.bently.wx.utils.StringUtils;
 import com.spring.bently.wx.utils.WeixinPropertiesUtils;
 import com.spring.bently.wx.utils.XmlUtils;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.dom4j.Document;
-import org.dom4j.io.XMLWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Map;
 
 /**
  * Created by wgq on 16-4-2.
@@ -71,8 +67,6 @@ public class EntranceController {
             responseMsg(msg,response) ;
         }
 
-        //responseMsg(ResponseUtils.textResponse(new HashMap<String,String>(),"测试"), response);
-        log.info(ResponseUtils.textResponse(new HashMap<String,String>(),"测试"));
         log.info((System.currentTimeMillis() - start) + "");
     }
 

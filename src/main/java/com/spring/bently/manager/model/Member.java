@@ -90,6 +90,20 @@ public class Member {
     @Column
     private Boolean isVip;
 
+    /**
+     * 是否订阅 true 是， FALSE不是
+     */
+    @Column
+    private Boolean isSubscribe ;
+
+    public Boolean getIsSubscribe() {
+        return isSubscribe;
+    }
+
+    public void setIsSubscribe(Boolean isSubscribe) {
+        this.isSubscribe = isSubscribe;
+    }
+
     public Member(){}
 
     public long getId() {

@@ -61,7 +61,7 @@ public class ResponseUtils {
                 sb.append("<Title><![CDATA[" + title +"]]></Title>");
                 sb.append("<Description><![CDATA[" + context + "...]]></Description>");
                // sb.append("<PicUrl><![CDATA[]]></PicUrl>");
-                sb.append("<Url><![CDATA[http://wgq.tunnel.qydev.com/wx/club/dynamic?id=" + id +"]]></Url>");
+                sb.append("<Url><![CDATA[" + map.get("url") + id +"]]></Url>");
                 sb.append("</item>");
 
             } catch (NoSuchMethodException e) {

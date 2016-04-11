@@ -1,21 +1,19 @@
 package com.spring.bently.wx.service.impl;
 
-import com.spring.bently.manager.dao.ClubDynamicDao;
+import com.spring.bently.manager.dao.AccessTokenDao;
 import com.spring.bently.manager.dao.ClubSummaryDao;
-import com.spring.bently.manager.model.ClubDynamic;
+import com.spring.bently.manager.dao.MemberDao;
+import com.spring.bently.manager.model.AccessToken;
 import com.spring.bently.manager.model.ClubSummary;
+import com.spring.bently.manager.model.Member;
 import com.spring.bently.wx.common.MenuEnum;
 import com.spring.bently.wx.utils.ResponseUtils;
+import com.spring.bently.wx.utils.WebAccessTokenUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +30,10 @@ public class EventService extends AbstractEventService {
     private ClubSummaryDao clubSummaryDao ;
 
     @Autowired
-    private ClubDynamicDao clubDynamicDao ;
+    private AccessTokenDao accessTokenDao ;
+
+    @Autowired
+    private MemberDao memberDao ;
 
     @Override
     public String clickEvent(Map<String, String> map) {
@@ -49,66 +50,64 @@ public class EventService extends AbstractEventService {
                 if(clubSummary != null) {
                     return ResponseUtils.textResponse(map, clubSummary.getContext()) ;
                 }
-                return ResponseUtils.textResponse(map, "正在开发中...") ;
-            case club_dy:
-
-                Sort sort = new Sort(Sort.Direction.DESC, "id");
-                Pageable pageable = new PageRequest(0,5,sort) ;
-                //Sort sort = new Sort() ;
-                Page<ClubDynamic> page = clubDynamicDao.findAll(pageable) ;
-                log.info("list.size = " + page.getSize());
-                List<ClubDynamic> list = new ArrayList<ClubDynamic>() ;
-                for(Iterator itr = page.iterator();itr.hasNext();) {
-                    ClubDynamic clubDynamic = (ClubDynamic)itr.next() ;
-                    list.add(clubDynamic);
-                }
-
-                return ResponseUtils.newsResponse(map,list) ;
-            case user_activity:
-                return ResponseUtils.textResponse(map,"正在开发中...") ;
-            case hotel_destine:
-                return ResponseUtils.textResponse(map,"正在开发中...") ;
-            case ykt_destine:
-                return ResponseUtils.textResponse(map,"正在开发中...") ;
-            case activity_destine:
-                return ResponseUtils.textResponse(map,"正在开发中...") ;
-            case wash_car:
-                return ResponseUtils.textResponse(map,"正在开发中...") ;
-            case waxing:
-                return ResponseUtils.textResponse(map,"正在开发中...") ;
-            case maintence:
-                return ResponseUtils.textResponse(map,"正在开发中...") ;
-            case rescue:
-                return ResponseUtils.textResponse(map,"正在开发中...") ;
-            case secretary:
-                return ResponseUtils.textResponse(map,"正在开发中...") ;
+                return "success" ;
             default:
-                return ResponseUtils.textResponse(map,"正在开发中...") ;
+                return ResponseUtils.textResponse(map,"success") ;
         }
     }
 
     @Override
     public String subscribeEvent(Map<String, String> map) {
-        return ResponseUtils.textResponse(map,"正在开发中...");
+        List<AccessToken> list = accessTokenDao.findByType("normal") ;
+        if(list.size() == 0) {
+            log.info("AccessToken不存在，请往数据库中添加");
+            return "success" ;
+        }
+        AccessToken accessToken = list.get(0) ;
+        String openid = map.get("fromusername") ;
+        Member member = memberDao.findByWechatid(openid) ;
+        if(member == null) {
+            Map userinfomap = WebAccessTokenUtil.userinfo_request_normal(accessToken.getAccesstoken(), openid) ;
+            log.info("用户关注后获取userinfo：" + userinfomap.toString());
+
+            member = new Member() ;
+            member.setWechatid(userinfomap.get("openid").toString());
+            member.setWechatname(userinfomap.get("nickname").toString());
+            member.setIsVip(false);
+            member.setIsSubscribe(true);
+            memberDao.save(member) ;
+
+        }else {
+            log.info("当前用户已经存在，只修改订阅状态");
+            member.setIsSubscribe(true);
+            memberDao.save(member) ;
+        }
+
+
+        return ResponseUtils.textResponse(map,"欢迎关注宾利俱乐部微信服务号..");
     }
 
     @Override
     public String unsubscribeEvent(Map<String, String> map) {
-        return ResponseUtils.textResponse(map,"正在开发中...");
+        String openid = map.get("fromusername") ;
+        Member member = memberDao.findByWechatid(openid) ;
+        member.setIsSubscribe(false);
+        memberDao.save(member) ;
+        return "success";
     }
 
     @Override
     public String scanEvent(Map<String, String> map) {
-        return ResponseUtils.textResponse(map,"正在开发中...");
+        return ResponseUtils.textResponse(map,"欢迎关注宾利俱乐部微信服务号..");
     }
 
     @Override
     public String locationEvent(Map<String, String> map) {
-        return ResponseUtils.textResponse(map,"正在开发中...");
+        return "success";
     }
 
     @Override
     public String viewEvent(Map<String, String> map) {
-        return ResponseUtils.textResponse(map,"正在开发中...");
+        return "success";
     }
 }

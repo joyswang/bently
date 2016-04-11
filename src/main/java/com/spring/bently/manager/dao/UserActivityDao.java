@@ -10,8 +10,9 @@
  */
 package com.spring.bently.manager.dao;
 
-import com.spring.bently.manager.model.User;
 import com.spring.bently.manager.model.UserActivity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -23,5 +24,5 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface UserActivityDao extends CrudRepository<UserActivity, Long> {
 
-
+    public Page<UserActivity> findAll(Pageable pageRequest) ;
 }

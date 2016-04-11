@@ -2,7 +2,6 @@ package com.spring.bently.manager.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
 /**
  * Created by wgq on 16-4-9.
@@ -23,6 +22,10 @@ public class AccessToken {
     @Column(length = 200)
     private String accesstoken;
 
+    @NotNull
+    @Column(length = 50)
+    private String type;
+
     public long getId() {
         return id;
     }
@@ -39,6 +42,14 @@ public class AccessToken {
         this.accesstoken = accesstoken;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -48,6 +59,7 @@ public class AccessToken {
 
         if (id != that.id) return false;
         if (accesstoken != null ? !accesstoken.equals(that.accesstoken) : that.accesstoken != null) return false;
+        if (type != null ? !type.equals(that.type) : that.type != null) return false;
 
         return true;
     }
@@ -56,6 +68,7 @@ public class AccessToken {
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (accesstoken != null ? accesstoken.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
         return result;
     }
 }
