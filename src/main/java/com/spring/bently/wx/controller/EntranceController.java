@@ -36,6 +36,7 @@ public class EntranceController {
 
         log.info("get请求...");
         String echostr = request.getParameter("echostr") ;
+        setWebUrl(request) ;
         log.info("echostr = " + echostr);
         //第一次接入的时候需要检查
         if(echostr != null) {
@@ -51,15 +52,13 @@ public class EntranceController {
             responseMsg(msg,response) ;
         }
 
-
-        return ;
     }
 
     @RequestMapping(value = "/entrance", method = RequestMethod.POST)
     public void entrancePost(HttpServletRequest request, HttpServletResponse response) {
         log.info("post请求...");
         Long start = System.currentTimeMillis() ;
-
+        setWebUrl(request) ;
         String msg = getMessagePost(request,response) ;
         if(msg == null) {
             responseMsg("",response) ;
@@ -147,5 +146,14 @@ public class EntranceController {
         }
 
         return false ;
+    }
+
+    private void setWebUrl(HttpServletRequest request) {
+        // String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/";
+        String basePath = request.getScheme()+"://"+request.getServerName()+"/";
+        if(WeixinPropertiesUtils.getProperties("webUrl") == null) {
+            WeixinPropertiesUtils.setProperties("webUrl",basePath);
+        }
+        log.info("网站的域名" + basePath);
     }
 }

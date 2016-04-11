@@ -12,13 +12,32 @@ public class WeixinPropertiesUtils {
 
     static {
         prop = new Properties() ;
+        InputStream in = null ;
+        InputStream in2 = null ;
         try {
-            InputStream in = new BufferedInputStream(WeixinPropertiesUtils.class.getResourceAsStream("/wx/weixin.properties")) ;
+            in = new BufferedInputStream(WeixinPropertiesUtils.class.getResourceAsStream("/wx/weixin.properties")) ;
             prop.load(in);
+            in2 = new BufferedInputStream(WeixinPropertiesUtils.class.getResourceAsStream("/wx/message.properties")) ;
+            prop.load(in2);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (in2 != null) {
+                try {
+                    in2.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

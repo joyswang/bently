@@ -9,6 +9,7 @@ import com.spring.bently.manager.model.Member;
 import com.spring.bently.wx.common.MenuEnum;
 import com.spring.bently.wx.utils.ResponseUtils;
 import com.spring.bently.wx.utils.WebAccessTokenUtil;
+import com.spring.bently.wx.utils.WeixinPropertiesUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,8 @@ public class EventService extends AbstractEventService {
     @Override
     public String clickEvent(Map<String, String> map) {
         String eventkey = map.get("eventkey") ;
+        String openid = map.get("fromusername") ;
+        String checkMsg = null ;
         log.info("进入到clickEvent中......");
         switch (MenuEnum.valueOf(eventkey)) {
             case club_profile:
@@ -51,8 +54,35 @@ public class EventService extends AbstractEventService {
                     return ResponseUtils.textResponse(map, clubSummary.getContext()) ;
                 }
                 return "success" ;
+            case wash_car:  //上门洗车
+                checkMsg = check(openid, map) ;
+                if(checkMsg != null) {
+                    return checkMsg ;
+                }
+
+                return "success" ;
+            case waxing:    //上门打蜡
+                checkMsg = check(openid,map) ;
+                if(checkMsg != null) {
+                    return checkMsg ;
+                }
+                return "success" ;
+            case maintence: //预约保养
+                checkMsg = check(openid,map) ;
+                if(checkMsg != null) {
+                    return checkMsg ;
+                }
+                return "success" ;
+            case rescue:    //室内救援
+                checkMsg = check(openid,map) ;
+                if(checkMsg != null) {
+                    return checkMsg ;
+                }
+                return "success" ;
+            case secretary:
+                return ResponseUtils.textResponse(map,WeixinPropertiesUtils.getProperties("xiaomishu")) ;
             default:
-                return ResponseUtils.textResponse(map,"success") ;
+                return ResponseUtils.textResponse(map,WeixinPropertiesUtils.getProperties("common_text_message")) ;
         }
     }
 
@@ -84,7 +114,7 @@ public class EventService extends AbstractEventService {
         }
 
 
-        return ResponseUtils.textResponse(map,"欢迎关注宾利俱乐部微信服务号..");
+        return ResponseUtils.textResponse(map,WeixinPropertiesUtils.getProperties("subscribe_message"));
     }
 
     @Override
@@ -98,7 +128,7 @@ public class EventService extends AbstractEventService {
 
     @Override
     public String scanEvent(Map<String, String> map) {
-        return ResponseUtils.textResponse(map,"欢迎关注宾利俱乐部微信服务号..");
+        return ResponseUtils.textResponse(map,WeixinPropertiesUtils.getProperties("subscribe_message"));
     }
 
     @Override
@@ -110,4 +140,22 @@ public class EventService extends AbstractEventService {
     public String viewEvent(Map<String, String> map) {
         return "success";
     }
+
+
+    private String check(String openid,Map<String,String> map) {
+        Member member = memberDao.findByWechatid(openid) ;
+        if(member == null) {
+            return ResponseUtils.textResponse(map,WeixinPropertiesUtils.getProperties("un_subscribe_message")) ;
+        }
+        if(!member.getIsSubscribe()) {
+            return ResponseUtils.textResponse(map,WeixinPropertiesUtils.getProperties("un_subscribe_message")) ;
+        }
+        if(!member.getIsVip()) {
+            StringBuilder builder = new StringBuilder(WeixinPropertiesUtils.getProperties("vip_message")+"\n\n") ;
+            builder.append("<a href=\"" + WeixinPropertiesUtils.getProperties("webUrl") + "wx/member/recharge\">加入我们</a>") ;
+            return ResponseUtils.textResponse(map, builder.toString()) ;
+        }
+        return null ;
+    }
+
 }

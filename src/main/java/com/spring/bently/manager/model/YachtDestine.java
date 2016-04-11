@@ -78,18 +78,9 @@ public class YachtDestine {
     @Column(length = 5)
     private Boolean isHandle;
 
-    @Column
-    private Date updateTime ;
 
     public YachtDestine(){}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 
     public long getId() {
         return id;

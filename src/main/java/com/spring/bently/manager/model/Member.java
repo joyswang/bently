@@ -64,25 +64,25 @@ public class Member {
      * 免费洗车剩余次数
      */
     @Column(length = 10)
-    private int washcarnum;
+    private int washcarnum = 0;
 
     /**
      * 免费上门打蜡剩余次数
      */
     @Column(length = 10)
-    private int waxingnum;
+    private int waxingnum = 0;
 
     /**
      * 免费室内救援剩余次数
      */
     @Column(length = 10)
-    private int indoorrenum;
+    private int indoorrenum = 0;
 
     /**
      * 免费保养剩余次数
      */
     @Column(length = 10)
-    private int maintenancenum;
+    private int maintenancenum = 0;
 
     /**
      * 是否会员 true 是， FALSE不是

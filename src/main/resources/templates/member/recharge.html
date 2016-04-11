@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0" />
+    <title>VIP充值</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/dist/lib/weui.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/dist/css/jquery-weui.css}" />
+
+</head>
+<body>
+<div class="weui_cells_title" style="font-size: 18px;">支付</div>
+<div class="weui-row">
+    <div class="weui-col-5"></div>
+    <div class="weui-col-33">
+        <button class="weui_btn weui_btn_primary">1个月</button>
+    </div>
+    <div class="weui-col-33">
+        <button class="weui_btn weui_btn_default">3个月</button>
+    </div>
+    <div class="weui-col-33">
+        <button class="weui_btn weui_btn_default">6个月</button>
+    </div>
+    <div class="weui-col-5"></div>
+</div>
+<div style="height: 10px;"></div>
+<div class="weui-row">
+    <div class="weui-col-5"></div>
+    <div class="weui-col-33">
+        <button class="weui_btn weui_btn_default">12个月</button>
+    </div>
+    <div class="weui-col-33">
+        <button class="weui_btn weui_btn_default">24个月</button>
+    </div>
+    <div class="weui-col-33">
+        <button class="weui_btn weui_btn_default">36个月</button>
+    </div>
+    <div class="weui-col-5"></div>
+</div>
+<div class="weui_cells">
+    <div class="weui_cell">
+        <div class="weui_cell_hd"><label class="weui_label" style="width: 4em;">自定义</label></div>
+        <div class="weui_cell_bd weui_cell_primary">
+            <input class="weui_input" type="tel" placeholder="时间" />
+        </div>
+    </div>
+</div>
+<div class="weui_cells_title">vip一个月10000元</div>
+<div class="weui_extra_area">
+    <button class="weui_btn weui_btn_primary" ontouchstart="">支付</button>
+</div>
+
+
+<script type="application/javascript" th:src="@{/resources/dist/lib/jquery-2.1.4.js}"></script>
+<script type="application/javascript" th:src="@{/resources/dist/js/jquery-weui.js}"></script>
+<script type="application/javascript" th:src="@{/resources/js/hoteldestine.js}"></script>
+</body>
+</html>
