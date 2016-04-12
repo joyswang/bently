@@ -36,7 +36,7 @@ public class EntranceController {
 
         log.info("get请求...");
         String echostr = request.getParameter("echostr") ;
-        setWebUrl(request) ;
+       // setWebUrl(request) ;
         log.info("echostr = " + echostr);
         //第一次接入的时候需要检查
         if(echostr != null) {
@@ -58,7 +58,7 @@ public class EntranceController {
     public void entrancePost(HttpServletRequest request, HttpServletResponse response) {
         log.info("post请求...");
         Long start = System.currentTimeMillis() ;
-        setWebUrl(request) ;
+        //setWebUrl(request) ;
         String msg = getMessagePost(request,response) ;
         if(msg == null) {
             responseMsg("",response) ;

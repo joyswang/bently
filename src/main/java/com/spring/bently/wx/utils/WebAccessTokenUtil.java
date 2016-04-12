@@ -38,6 +38,7 @@ public class WebAccessTokenUtil {
 
     }
 
+    //通过web_access_token和openid获取用户信息
     private static Map userinfo_request(String access_token,String openid) {
         String get_userinfo_url = WeixinPropertiesUtils.getProperties("get_userinfo_url") ;
         String URL = StringUtils.replaceEach(get_userinfo_url,access_token,openid) ;
@@ -54,6 +55,7 @@ public class WebAccessTokenUtil {
         return userinfomap ;
     }
 
+    //通过access_token和openid获取用户信息
     public static Map userinfo_request_normal(String access_token,String openid) {
         String get_userinfo_url = WeixinPropertiesUtils.getProperties("get_normal_userinfo_url") ;
         String URL = StringUtils.replaceEach(get_userinfo_url,access_token,openid) ;

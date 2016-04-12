@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,7 +28,7 @@ public class AccessTokenSchedule {
 
     //每个小时触发一次
     @Scheduled(cron = "0 0 * * * ?")
-    public void getAccessToken() {
+    public void getAccessTokenScheduled() {
         log.info("进入access_token........");
 
         String access_token_url = WeixinPropertiesUtils.getProperties("access_token_url") ;
@@ -52,13 +51,10 @@ public class AccessTokenSchedule {
         String errcode = map.get("errcode")==null?"":map.get("errcode").toString() ;
         if(StringUtils.isEmpty(errcode)) {
 
-            List<AccessToken> list = accessTokenDao.findByType("normal") ;
-            AccessToken accessToken = null ;
-            if(list == null || list.size() == 0) {
+            AccessToken accessToken = accessTokenDao.findByType("normal") ;
+            if(accessToken == null) {
                 accessToken = new AccessToken() ;
             }
-
-            accessToken = list.get(0);
             accessToken.setAccesstoken(map.get("access_token").toString());
             //accessToken.setType("normal");
             accessTokenDao.save(accessToken) ;
@@ -66,4 +62,36 @@ public class AccessTokenSchedule {
         }
 
     }
+
+    @Scheduled(cron = "24 30 * * * ?")
+    public void jsapiTicketScheduled() {
+        log.info("进入jsapi_ticket........");
+        String jsapi_ticket_url = WeixinPropertiesUtils.getProperties("jsapi_ticket_url") ;
+        String access_token = accessTokenDao.findByType("normal").getAccesstoken() ;
+
+        String postUrl = StringUtils.replaceEach(jsapi_ticket_url,access_token) ;
+        log.info("postUrl = " + postUrl);
+
+        HttpConnectionCommon hcc = new HttpConnectionCommon(postUrl, "GET") ;
+        CustomHttpsConnection connection = new CustomHttpsConnection(hcc) ;
+        String jsonResult = connection.httpsClient(null) ;
+        log.info("jsonResult = " + jsonResult);
+        Map map = JsonUtils.jsonToMap(jsonResult);
+        if(map == null) {
+            log.info("获取jsapi_ticket的json格式字符串有问题，无法转成map对象");
+            return ;
+        }
+        String errcode = map.get("errcode")==null?"":map.get("errcode").toString() ;
+        if("0".equals(errcode)) {
+
+            AccessToken jsapiticket = accessTokenDao.findByType("jsapi_ticket") ;
+            if(jsapiticket == null) {
+                jsapiticket = new AccessToken() ;
+            }
+            jsapiticket.setAccesstoken(map.get("ticket").toString());
+            //accessToken.setType("jsapi_ticket");
+            accessTokenDao.save(jsapiticket) ;
+        }
+    }
+
 }

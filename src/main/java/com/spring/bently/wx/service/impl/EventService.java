@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,6 +43,7 @@ public class EventService extends AbstractEventService {
         log.info("进入到clickEvent中......");
         switch (MenuEnum.valueOf(eventkey)) {
             case club_profile:
+            {
                 Iterator<ClubSummary> iterable = clubSummaryDao.findAll().iterator();
                 ClubSummary clubSummary = null ;
                 if(iterable.hasNext()){
@@ -54,31 +54,8 @@ public class EventService extends AbstractEventService {
                     return ResponseUtils.textResponse(map, clubSummary.getContext()) ;
                 }
                 return "success" ;
-            case wash_car:  //上门洗车
-                checkMsg = check(openid, map) ;
-                if(checkMsg != null) {
-                    return checkMsg ;
-                }
+            }
 
-                return "success" ;
-            case waxing:    //上门打蜡
-                checkMsg = check(openid,map) ;
-                if(checkMsg != null) {
-                    return checkMsg ;
-                }
-                return "success" ;
-            case maintence: //预约保养
-                checkMsg = check(openid,map) ;
-                if(checkMsg != null) {
-                    return checkMsg ;
-                }
-                return "success" ;
-            case rescue:    //室内救援
-                checkMsg = check(openid,map) ;
-                if(checkMsg != null) {
-                    return checkMsg ;
-                }
-                return "success" ;
             case secretary:
                 return ResponseUtils.textResponse(map,WeixinPropertiesUtils.getProperties("xiaomishu")) ;
             default:
@@ -88,12 +65,11 @@ public class EventService extends AbstractEventService {
 
     @Override
     public String subscribeEvent(Map<String, String> map) {
-        List<AccessToken> list = accessTokenDao.findByType("normal") ;
-        if(list.size() == 0) {
+        AccessToken accessToken = accessTokenDao.findByType("normal") ;
+        if(accessToken == null) {
             log.info("AccessToken不存在，请往数据库中添加");
             return "success" ;
         }
-        AccessToken accessToken = list.get(0) ;
         String openid = map.get("fromusername") ;
         Member member = memberDao.findByWechatid(openid) ;
         if(member == null) {
