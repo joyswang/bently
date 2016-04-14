@@ -63,7 +63,7 @@ public class AccessTokenSchedule {
 
     }
 
-    @Scheduled(cron = "24 30 * * * ?")
+    @Scheduled(cron = "24 0 * * * ?")
     public void jsapiTicketScheduled() {
         log.info("进入jsapi_ticket........");
         String jsapi_ticket_url = WeixinPropertiesUtils.getProperties("jsapi_ticket_url") ;

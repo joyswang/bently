@@ -1,5 +1,6 @@
 package com.spring.bently.wx.controller.destine;
 
+import com.spring.bently.manager.dao.MemberDao;
 import com.spring.bently.manager.dao.YachtDestineDao;
 import com.spring.bently.manager.model.YachtDestine;
 import com.spring.bently.wx.controller.common.CommonController;
@@ -68,5 +69,10 @@ public class YachtController extends CommonController {
         }
         model.addAttribute("msg","游艇预定成功") ;
         return "success" ;
+    }
+
+    @Override
+    public MemberDao getMemberDao() {
+        return null;
     }
 }

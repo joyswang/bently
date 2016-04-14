@@ -1,5 +1,9 @@
 package com.spring.bently.wx.utils;
 
+import com.spring.bently.manager.dao.AccessTokenDao;
+import com.spring.bently.manager.model.AccessToken;
+
+import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -21,7 +25,16 @@ public class JsSdkSign {
         for (Map.Entry entry : ret.entrySet()) {
             System.out.println(entry.getKey() + ", " + entry.getValue());
         }
-    };
+    }
+
+    public static Map<String, String> getSign(HttpServletRequest request, AccessTokenDao accessTokenDao) {
+        String url = request.getScheme()+"://"+request.getServerName()+"/wx/member/recharge";
+        System.out.println("url = " + url);
+        AccessToken jsapiticket = accessTokenDao.findByType("jsapi_ticket") ;
+        Map<String, String> map = JsSdkSign.sign(jsapiticket.getAccesstoken(), url) ;
+        map.put("appid", WeixinPropertiesUtils.getProperties("appid")) ;
+        return map ;
+    }
 
     public static Map<String, String> sign(String jsapi_ticket, String url) {
         Map<String, String> ret = new HashMap<String, String>();
@@ -79,5 +92,21 @@ public class JsSdkSign {
 
     private static String create_timestamp() {
         return Long.toString(System.currentTimeMillis() / 1000);
+    }
+
+    //按照微信规则生成pre_pay sign
+    public static String getPrePaySign(Map<String,Object> map, String wxkey) {
+        StringBuilder builder = new StringBuilder() ;
+        for(String key:map.keySet()) {
+            System.out.println("key = " + key);
+            System.out.println("value = " + map.get(key));
+            builder.append(key).append("=").append(map.get(key)).append("&") ;
+        }
+        //builder.deleteCharAt(builder.length() - 1) ;
+        builder.append("key=").append(wxkey) ;
+        System.out.println("builder = " + builder.toString());
+        String sign = StringUtils.MD5(builder.toString()).toUpperCase() ;
+        System.out.println("sign = " + sign);
+        return sign ;
     }
 }

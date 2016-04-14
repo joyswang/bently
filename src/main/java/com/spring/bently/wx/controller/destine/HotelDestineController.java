@@ -1,6 +1,7 @@
 package com.spring.bently.wx.controller.destine;
 
 import com.spring.bently.manager.dao.HotelDestineDao;
+import com.spring.bently.manager.dao.MemberDao;
 import com.spring.bently.manager.model.HotelDestine;
 import com.spring.bently.wx.controller.common.CommonController;
 import com.spring.bently.wx.utils.DateUtils;
@@ -73,4 +74,8 @@ public class HotelDestineController extends CommonController {
         return "success" ;
     }
 
+    @Override
+    public MemberDao getMemberDao() {
+        return null;
+    }
 }
