@@ -1,101 +1,58 @@
 <!DOCTYPE html>
-<html ng-app="jtdscs">
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>jtdscs v0.3</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/app/public/components/html5-boilerplate/dist/css/normalize.css">
-    <link rel="stylesheet" href="/app/public/components/html5-boilerplate/dist/css/main.css">
-    <link rel="stylesheet" href="/app/app.css">
-    <script src="/app/public/components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
-    <!--easyui-->
-    <link rel="stylesheet" href="/app/public/components/jeasyui/themes/default/easyui.css">
-    <link rel="stylesheet" href="/app/public/components/jeasyui/themes/icon.css">
-    <link rel="stylesheet" href="/app/public/components/jeasyui/themes/color.css">
-
-    <script src="/app/public/components/jquery/dist/jquery.min.js"></script>
-    <script src="/app/public/components/jeasyui/jquery.easyui.min.js"></script>
+    <meta charset="UTF-8"/>
+    <title ncy-breadcrumb-last="{{ncyBreadcrumbLabel}}-宾利俱乐部管理平台"></title>
+    <link rel="shortcut icon" href="/resources/images/binli.jpg" type="image/png"/>
+    <link rel="stylesheet" href="/assets/ace/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/assets/ace/css/bootstrap-timepicker.css"/>
+    <link rel="stylesheet" href="/assets/ace/css/colorpicker.css"/>
+    <link rel="stylesheet" href="/assets/ace/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/assets/ace/css/chosen.css"/>
+    <link rel="stylesheet" href="/assets/ace/css/ace.min.css"/>
+    <link rel="stylesheet" href="/assets/angular/angular-ui-select.min.css"/>
+    <link rel="stylesheet" href="/assets/angular/angular-growl.min.css"/>
+    <link rel="stylesheet" href="/assets/angular/angular-datepicker.min.css"/>
+    <link rel="stylesheet" href="/assets/angular/ui-grid.min.css"/>
+    <link rel="stylesheet" href="/assets/angular-chart/css/angular-chart.min.css"/>
+    <link rel="stylesheet" href="/assets/csshake/csshake-slow.min.css"/>
+    <link rel="stylesheet" href="/assets/angular/angular-busy.min.css"/>
+    <link rel="stylesheet" href="/resources/css/style.min.css"/>
+    <script src="/assets/js/xlsx.core.min.js"></script>
+    <script src="/assets/js/alasql.min.js"></script>
 </head>
 <body>
-
-<div class="easyui-layout" fit="true"  ng-controller="HomeCtrl as ctrl">
-    <div data-options="region:'north'" style="height:80px">
-        <div class="easyui-panel" style="padding:5px; line-height: 30px;">
-            <span style="font-size: 16px; font-weight: bold;">宾利俱乐部管理平台</span>
-            <div style="font-size: 16px;float: right;">
-                <span ng-click="ctrl.login()">{{ctrl.username}}</span>
-                <span ng-show="ctrl.username !='未登录'" ng-click="ctrl.logout()" class="easyui-linkbutton">退出</span>
-            </div>
-        </div>
-
-        <div style="background:#ffffff;padding:5px;">
-            <a href="#" class="easyui-linkbutton" data-options="plain:true">首页</a>
-            <a href="#" class="easyui-menubutton" menu="#mm1" style="color: #000;">最新资讯</a>
-            <a href="#" class="easyui-menubutton" menu="#mm2" style="color: #000;">预订服务</a>
-            <a href="#" class="easyui-menubutton" menu="#mm3" style="color: #000;">会员中心</a>
-            <a href="#" class="easyui-menubutton" menu="#mm4" style="color: #000;">设置</a>
-        </div>
-        <div id="mm1">
-            <div><a href="#/basicdata/shipcompany">俱乐部简介</a></div>
-            <div ><a href="#/basicdata/clubdynamic">俱乐部动态</a></div>
-            <div><a href="#/basicdata/clubactivity">会员活动回顾</a></div>
-        </div>
-        <div id="mm2">
-
-            <div><a href="#/destine/hotelDestineList">酒店预订</a></div>
-            <div><a href="#/destine/yachtDestineList">游艇预订</a></div>
-            <div><a href="#/destine/activityDestineList">私人活动预订</a></div>
-        </div>
-        <div id="mm3">
-            <div><a href="#/membercenter/washCarList">上门洗车</a></div>
-            <div><a href="#/membercenter/waxingList">上门打蜡</a></div>
-            <div><a href="#/membercenter/maintenanceList">预约保养</a></div>
-            <div><a href="#/membercenter/rescueList">市内救援</a></div>
-            <div>服务秘书</div>
-        </div>
-        <div id="mm4">
-            <div><a href="#/membercenter/memberList">用户管理</a></div>
+<div class="navbar navbar-default" id="navbar">
+    <div class="navbar-container" id="navbar-container">
+        <div class="navbar-header pull-left">
+            <a href="#/" class="navbar-brand">
+                <img src="/resources/images/binli.jpg" class="logo"/>
+                <strong>宾利俱乐部管理平台</strong>
+            </a>
+            <ul class="nav navbar-nav top-menu">
+                <li>
+                    <a ng-class="{'top-menu-active':isState('home')}" ui-sref="home">首页</a>
+                </li>
+                <li>
+                    <a ng-class="{'top-menu-active':isState('news')}" ui-sref="news.ship">最新资讯</a>
+                </li>
+                <li>
+                    <a ng-class="{'top-menu-active':isState('destine')}" ui-sref="destine.hotel">预订服务</a>
+                </li>
+                <li>
+                    <a ng-class="{'top-menu-active':isState('memberCenter')}" ui-sref="memberCenter.washcar">会员中心</a>
+                </li>
+                <li>
+                    <a ng-class="{'top-menu-active':isState('manager')}" ui-sref="manager.member">设置</a>
+                </li>
+            </ul>
         </div>
     </div>
-
-    <div data-options="region:'center',iconCls:'icon-ok'" fit="true">
-        <div ng-view></div>
-
-
-    </div>
-
 </div>
 
-
-<script src="/app/public/components/angular/angular.js"></script>
-<script src="/app/public/components/angular-route/angular-route.js"></script>
-<script src="/app/app.js"></script>
-
-
-<!--controller-->
-<script src="/app/controller/homectrl.js"></script>
-<script src="/app/controller/login.js"></script>
-<script src="/app/controller/basicdata/shipcompanyctrl.js"></script>
-<script src="/app/controller/basicdata/club-dynamic.js"></script>
-<script src="/app/controller/basicdata/club-dynamic-edit.js"></script>
-<script src="/app/controller/basicdata/club-dynamic-form.js"></script>
-<script src="/app/controller/basicdata/club-activity-list.js"></script>
-<script src="/app/controller/basicdata/club-activity-edit.js"></script>
-<script src="/app/controller/basicdata/club-activity-form.js"></script>
-<script src="/app/controller/destine/hotel-destine-list.js"></script>
-<script src="/app/controller/destine/yacht-destine-list.js"></script>
-<script src="/app/controller/destine/activity-destine-list.js"></script>
-<script src="/app/controller/membercenter/washcar-list.js"></script>
-<script src="/app/controller/membercenter/waxing-list.js"></script>
-<script src="/app/controller/membercenter/maintenance-list.js"></script>
-<script src="/app/controller/membercenter/rescue-list.js"></script>
-<script src="/app/controller/membercenter/member-manager-list.js"></script>
-<script src="/app/controller/membercenter/member-manager-edit.js"></script>
-
-
-<!--route-->
-<script src="/app/route/basicdata.js"></script>
+<div class="main-container" id="main-container">
+    <div ui-view></div>
+</div>
+<script data-main="/js/main" src="/assets/js/require.min.js"></script>
 </body>
 </html>

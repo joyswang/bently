@@ -56,9 +56,9 @@ public class DestineController {
     }
 
     @RequestMapping("/handle/hotel")
-    public BentlyResponse handleHotel(String wechatid){
+    public BentlyResponse handleHotel(long id){
 
-        HotelDestine hotelDestine = hotelDestineDao.findBywechatid(wechatid);
+        HotelDestine hotelDestine = hotelDestineDao.findOne(id);
         hotelDestine.setIsHandle(true);
         hotelDestine.setHandleuser("bentley");
         hotelDestine.setUpdateTime(new Date());
@@ -83,9 +83,9 @@ public class DestineController {
     }
 
     @RequestMapping("/handle/yacht")
-    public BentlyResponse handleYacht(String wechatid){
+    public BentlyResponse handleYacht(long id){
 
-        YachtDestine yachtDestine = yachtDestineDao.findBywechatid(wechatid);
+        YachtDestine yachtDestine = yachtDestineDao.findOne(id);
         yachtDestine.setIsHandle(true);
         yachtDestine.setHandleuser("bentley");
         yachtDestine.setUpdateTime(new Date());
@@ -110,9 +110,9 @@ public class DestineController {
     }
 
     @RequestMapping("/handle/activityDestine")
-    public BentlyResponse handleActivity(String wechatid){
+    public BentlyResponse handleActivity(long id){
 
-        ActivityDestine activityDestine = activityDestineDao.findBywechatid(wechatid);
+        ActivityDestine activityDestine = activityDestineDao.findOne(id);
         activityDestine.setIsHandle(true);
         activityDestine.setHandleuser("bentley");
         activityDestine.setUpdateTime(new Date());

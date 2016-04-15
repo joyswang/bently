@@ -63,10 +63,10 @@ public class MemberCenterController {
     }
 
     @RequestMapping("/handle/washCar")
-    public BentlyResponse handleHotel(String wechatid){
+    public BentlyResponse handleHotel(long id){
 
-        WashCar washCar = washCarDao.findBywechatid(wechatid);
-        Member member = memberDao.findByWechatid(wechatid);
+        WashCar washCar = washCarDao.findOne(id);
+        Member member = memberDao.findByWechatid(washCar.getWechatid());
         if(member == null){
             return BentlyResponse.fail("会员不存在!");
         }
@@ -105,10 +105,10 @@ public class MemberCenterController {
     }
 
     @RequestMapping("/handle/waxing")
-    public BentlyResponse handleWaxing(String wechatid){
+    public BentlyResponse handleWaxing(long id){
 
-        Waxing waxing = waxingDao.findBywechatid(wechatid);
-        Member member = memberDao.findByWechatid(wechatid);
+        Waxing waxing = waxingDao.findOne(id);
+        Member member = memberDao.findByWechatid(waxing.getWechatid());
         if(member == null){
             return BentlyResponse.fail("会员不存在!");
         }
@@ -146,10 +146,10 @@ public class MemberCenterController {
     }
 
     @RequestMapping("/handle/maintenance")
-    public BentlyResponse handleMaintenance(String wechatid){
+    public BentlyResponse handleMaintenance(long id){
 
-        Maintenance maintenance = maintenanceDao.findBywechatid(wechatid);
-        Member member = memberDao.findByWechatid(wechatid);
+        Maintenance maintenance = maintenanceDao.findOne(id);
+        Member member = memberDao.findByWechatid(maintenance.getWechatid());
         if(member == null){
             return BentlyResponse.fail("会员不存在!");
         }
@@ -187,10 +187,10 @@ public class MemberCenterController {
     }
 
     @RequestMapping("/handle/rescue")
-    public BentlyResponse handleRescue(String wechatid){
+    public BentlyResponse handleRescue(long id){
 
-        Rescue rescue = rescueDao.findBywechatid(wechatid);
-        Member member = memberDao.findByWechatid(wechatid);
+        Rescue rescue = rescueDao.findOne(id);
+        Member member = memberDao.findByWechatid(rescue.getWechatid());
         if(member == null){
             return BentlyResponse.fail("会员不存在!");
         }
