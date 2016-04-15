@@ -1,5 +1,6 @@
 package com.spring.bently.wx.utils;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -43,6 +44,26 @@ public class XmlUtils {
         return map ;
     }
 
+    public static Map<String,String> xmlToMapString(String message) {
+        Document document = null;
+        Map<String,String> map = new HashMap<String,String>() ;
+        try{
+            document = DocumentHelper.parseText(message) ;
+            Element root = document.getRootElement() ;
+            for(Iterator it = root.elementIterator();it.hasNext();) {
+                Element element = (Element) it.next() ;
+                map.put(element.getName(),element.getText()) ;
+            }
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }finally {
+            document.clearContent();
+            document = null ;
+        }
+
+        return map ;
+    }
+
     public static String mapToXml(Map<String,Object> map) {
 
         StringBuilder sb = new StringBuilder("<xml>") ;
@@ -64,5 +85,21 @@ public class XmlUtils {
 
         return sb.toString() ;
 
+    }
+
+    public static String mapToXmlTwo(Map<String,Object> map) {
+        StringBuilder sb = new StringBuilder("<xml>") ;
+
+        for(String key : map.keySet()) {
+
+            sb.append("<").append(key).append(">") ;
+            sb.append(StringEscapeUtils.escapeXml10(map.get(key).toString())) ;
+            if("nonce_str".equals(key)) {
+                System.out.println(StringEscapeUtils.escapeXml10(map.get(key).toString()));
+            }
+            sb.append("</").append(key).append(">") ;
+        }
+        sb.append("</xml>") ;
+        return sb.toString() ;
     }
 }

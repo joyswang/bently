@@ -1,6 +1,7 @@
 package com.spring.bently.wx.controller.destine;
 
 import com.spring.bently.manager.dao.ActivityDestineDao;
+import com.spring.bently.manager.dao.MemberDao;
 import com.spring.bently.manager.model.ActivityDestine;
 import com.spring.bently.wx.controller.common.CommonController;
 import com.spring.bently.wx.utils.DateUtils;
@@ -71,5 +72,10 @@ public class ActivityDestineController extends CommonController {
         }
         model.addAttribute("msg","活动预定成功") ;
         return "destine/destine_success" ;
+    }
+
+    @Override
+    public MemberDao getMemberDao() {
+        return null;
     }
 }

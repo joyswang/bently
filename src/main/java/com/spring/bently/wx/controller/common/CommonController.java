@@ -6,6 +6,7 @@ import com.spring.bently.wx.utils.WebAccessTokenUtil;
 import com.spring.bently.wx.utils.WeixinPropertiesUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.ui.ModelMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,7 +15,7 @@ import java.util.Map;
 /**
  * Created by wgq on 16-4-12.
  */
-public class CommonController {
+public abstract class CommonController {
 
     private static Logger log = LoggerFactory.getLogger(CommonController.class) ;
 
@@ -40,19 +41,33 @@ public class CommonController {
         return map ;
     }
 
-    public String checkIsMemberAndIsVip(Map<String,String> map, MemberDao memberDao) {
-        String openid = map.get("openid") ;
-        Member member = memberDao.findByWechatid(openid) ;
+    public String checkIsMemberAndIsVip(HttpServletRequest request,HttpSession session,ModelMap model) {
+        Map userinfoMap = this.setUserInfoSession(request, session) ;
+
+        if(userinfoMap == null) {
+            return "error" ;
+        }
+        log.info("userinfoMap = " + userinfoMap.toString());
+
+        String openid = userinfoMap.get("openid").toString() ;
+        Member member = this.getMemberDao().findByWechatid(openid) ;
         if(member == null) {
-            return WeixinPropertiesUtils.getProperties("un_subscribe_message") ;
+            model.addAttribute("msg",WeixinPropertiesUtils.getProperties("un_subscribe_message")) ;
+            //model.addAttribute("url","") ;
+            return "warning" ;
         }
         if(!member.getIsSubscribe()) {
-            return WeixinPropertiesUtils.getProperties("un_subscribe_message") ;
+            model.addAttribute("msg",WeixinPropertiesUtils.getProperties("un_subscribe_message")) ;
+            return "warning" ;
         }
         if(!member.getIsVip()) {
-            StringBuilder builder = new StringBuilder(WeixinPropertiesUtils.getProperties("vip_message")) ;
-            return builder.toString() ;
+            model.addAttribute("msg",WeixinPropertiesUtils.getProperties("vip_message")) ;
+            model.addAttribute("url","/wx/member/recharge") ;
+            return "warning" ;
         }
+
         return null ;
     }
+
+    public abstract MemberDao getMemberDao() ;
 }
