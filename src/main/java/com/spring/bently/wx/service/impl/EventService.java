@@ -1,14 +1,13 @@
 package com.spring.bently.wx.service.impl;
 
-import com.spring.bently.manager.dao.AccessTokenDao;
 import com.spring.bently.manager.dao.ClubSummaryDao;
 import com.spring.bently.manager.dao.MemberDao;
-import com.spring.bently.manager.model.AccessToken;
 import com.spring.bently.manager.model.ClubSummary;
 import com.spring.bently.manager.model.Member;
 import com.spring.bently.wx.common.MenuEnum;
 import com.spring.bently.wx.utils.ResponseUtils;
 import com.spring.bently.wx.utils.WebAccessTokenUtil;
+import com.spring.bently.wx.utils.WeixiProperty;
 import com.spring.bently.wx.utils.WeixinPropertiesUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,9 +27,6 @@ public class EventService extends AbstractEventService {
 
     @Autowired
     private ClubSummaryDao clubSummaryDao ;
-
-    @Autowired
-    private AccessTokenDao accessTokenDao ;
 
     @Autowired
     private MemberDao memberDao ;
@@ -65,17 +61,12 @@ public class EventService extends AbstractEventService {
 
     @Override
     public String subscribeEvent(Map<String, String> map) {
-        AccessToken accessToken = accessTokenDao.findByType("normal") ;
-        if(accessToken == null) {
-            log.info("AccessToken不存在，请往数据库中添加");
-            return "success" ;
-        }
         String openid = map.get("fromusername") ;
         Member member = memberDao.findByWechatid(openid) ;
         if(member == null) {
-            Map userinfomap = WebAccessTokenUtil.userinfo_request_normal(accessToken.getAccesstoken(), openid) ;
+            String access_token = WeixiProperty.ACCESSTOKEN ;
+            Map userinfomap = WebAccessTokenUtil.userinfo_request_normal(access_token, openid) ;
             log.info("用户关注后获取userinfo：" + userinfomap.toString());
-
             member = new Member() ;
             member.setWechatid(userinfomap.get("openid").toString());
             member.setWechatname(userinfomap.get("nickname").toString());

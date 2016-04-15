@@ -9,5 +9,6 @@ public enum EventEnum {
     SCAN,
     LOCATION,
     CLICK,
-    VIEW;
+    VIEW,
+    MASSSENDJOBFINISH;  //群发消息回调事件
 }

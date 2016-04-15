@@ -1,15 +1,19 @@
 package com.wx.test;
 
+import com.spring.bently.wx.service.impl.SendTextMessageService;
+import com.spring.bently.wx.service.impl.UserGroupService;
+import com.spring.bently.wx.utils.JsSdkSign;
 import com.spring.bently.wx.utils.WeixinPropertiesUtils;
+import com.spring.bently.wx.utils.XmlUtils;
 import com.spring.bently.wx.utils.httptool.CustomHttpConnection;
 import com.spring.bently.wx.utils.httptool.CustomHttpsConnection;
 import com.spring.bently.wx.utils.httptool.HttpConnectionCommon;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.Calendar;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by wgq on 16-4-2.
@@ -53,5 +57,58 @@ public class MyTest {
         String message = connection.httpClient(buf.toString()) ;
         System.out.println(message);
 
+    }
+
+    @Test
+    public void testWxPay() {
+        Map<String,Object> map = new TreeMap<String,Object>() ; //使用TreeMap 自动排序
+        String key = "bentleyclub88153426benlteyclub88";   //商户支付平台key，用于生成0sign
+        map.put("appid", "wxf354b3a19d4fe54b") ;    //appid
+        map.put("mch_id", "1327994601") ;  //商户号
+        map.put("nonce_str", "2hsdjfhslylljkj24h2ghj4jh2j") ;  //随机字符串
+        map.put("device_info", "WEB") ;
+        map.put("body", "11") ;  //商品描述
+        map.put("out_trade_no", "D12345422332") ;    //商户订单号
+        map.put("total_fee", 12 * 30 * 100) ;
+        map.put("spbill_create_ip", "127.0.0.1") ;    //终端ip
+        //接收微信支付异步通知回调地址，通知url必须为直接可访问的url，不能携带参数。
+        map.put("notify_url", "http://wgq.tunnel.qydev.com/wx/member/recharge/callback") ;
+        map.put("trade_type", "JSAPI") ;    //交易类型
+        map.put("openid","oSyr1wftCyS_OZoeWpZBhGCYDOKI") ;    //openid
+        String sign = JsSdkSign.getPrePaySign(map, key) ;
+        Map<String,Object> requestMap = new LinkedHashMap<String,Object>() ;
+        for(String keys:map.keySet()) {
+            requestMap.put(keys,map.get(keys)) ;
+        }
+        requestMap.put("sign", sign) ; //签名
+
+        String postUrl = WeixinPropertiesUtils.getProperties("single_unified_url") ;
+        HttpConnectionCommon hcc = new HttpConnectionCommon(postUrl,5000,"POST","text/xml") ;
+        CustomHttpsConnection connection = new CustomHttpsConnection(hcc) ;
+        String responseMsg = connection.httpsClient(XmlUtils.mapToXmlTwo(requestMap)) ;
+        System.out.println(XmlUtils.mapToXmlTwo(requestMap));
+        System.out.println("微信返回信息：" + responseMsg);
+        if(responseMsg == null) {
+        }
+        //Map responseMap = XmlUtils.xmlToMapString(responseMsg) ;
+    }
+
+    @Test
+    public void testSendMessage() {
+        Map<String,Object> map = new HashMap<String,Object>() ;
+        map.put("group_id",100) ;
+        map.put("context","测试") ;
+        map.put("is_to_all",false) ;
+        map.put("group",true);
+
+        SendTextMessageService sendTextMessageService = new SendTextMessageService() ;
+        String responseMsg = sendTextMessageService.sendMessage(map) ;
+        System.out.println(responseMsg);
+    }
+
+    @Test
+    public void testGetGroupList() {
+        UserGroupService userGroupService = new UserGroupService() ;
+        System.out.println(userGroupService.listGroup());
     }
 }
