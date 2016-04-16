@@ -1,8 +1,5 @@
 package com.spring.bently.wx.utils;
 
-import com.spring.bently.manager.dao.AccessTokenDao;
-import com.spring.bently.manager.model.AccessToken;
-
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -27,11 +24,11 @@ public class JsSdkSign {
         }
     }
 
-    public static Map<String, String> getSign(HttpServletRequest request, AccessTokenDao accessTokenDao) {
+    public static Map<String, String> getSign(HttpServletRequest request) {
         String url = request.getScheme()+"://"+request.getServerName()+"/wx/member/recharge";
         System.out.println("url = " + url);
-        AccessToken jsapiticket = accessTokenDao.findByType("jsapi_ticket") ;
-        Map<String, String> map = JsSdkSign.sign(jsapiticket.getAccesstoken(), url) ;
+       // AccessToken jsapiticket = accessTokenDao.findByType("jsapi_ticket") ;
+        Map<String, String> map = JsSdkSign.sign(WeixiProperty.JSAPITICKET, url) ;
         map.put("appid", WeixinPropertiesUtils.getProperties("appid")) ;
         return map ;
     }

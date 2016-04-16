@@ -93,9 +93,11 @@ public class XmlUtils {
         for(String key : map.keySet()) {
 
             sb.append("<").append(key).append(">") ;
-            sb.append(StringEscapeUtils.escapeXml10(map.get(key).toString())) ;
-            if("nonce_str".equals(key)) {
-                System.out.println(StringEscapeUtils.escapeXml10(map.get(key).toString()));
+            if("notify_url".equals(key)) {
+                sb.append(StringEscapeUtils.escapeXml10(map.get(key).toString())) ;
+               // System.out.println(StringEscapeUtils.escapeXml10(map.get(key).toString()));
+            }else {
+                sb.append(map.get(key).toString()) ;
             }
             sb.append("</").append(key).append(">") ;
         }

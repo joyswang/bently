@@ -72,8 +72,9 @@ public class RechargeController extends CommonController {
         String key = WeixinPropertiesUtils.getProperties("wxkey");   //商户支付平台key，用于生成0sign
 
         map.put("appid", WeixinPropertiesUtils.getProperties("appid")) ;    //appid
-        map.put("mch_id", WeixinPropertiesUtils.getProperties("mch_id")) ;  //商户号
+        map.put("mch_id", Integer.parseInt(WeixinPropertiesUtils.getProperties("mch_id"))) ;  //商户号
         map.put("nonce_str", StringUtils.create_nonce_str()) ;  //随机字符串
+        map.put("device_info", "WEB") ;
         map.put("body", "宾利俱乐部会员充值") ;  //商品描述
         map.put("out_trade_no", StringUtils.generateOrderId()) ;    //商户订单号
         map.put("total_fee", month_in * Integer.parseInt(WeixinPropertiesUtils.getProperties("one_month"))) ;

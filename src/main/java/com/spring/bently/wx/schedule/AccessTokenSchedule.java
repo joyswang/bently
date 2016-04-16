@@ -4,6 +4,7 @@ import com.spring.bently.manager.dao.AccessTokenDao;
 import com.spring.bently.manager.model.AccessToken;
 import com.spring.bently.wx.utils.JsonUtils;
 import com.spring.bently.wx.utils.StringUtils;
+import com.spring.bently.wx.utils.WeixiProperty;
 import com.spring.bently.wx.utils.WeixinPropertiesUtils;
 import com.spring.bently.wx.utils.httptool.CustomHttpsConnection;
 import com.spring.bently.wx.utils.httptool.HttpConnectionCommon;
@@ -61,6 +62,7 @@ public class AccessTokenSchedule {
             //WeixinPropertiesUtils.setProperties("access_token",map.get("access_token").toString());
         }
 
+        WeixiProperty.ACCESSTOKEN = map.get("access_token").toString() ;
     }
 
     @Scheduled(cron = "24 0 * * * ?")
@@ -92,6 +94,7 @@ public class AccessTokenSchedule {
             //accessToken.setType("jsapi_ticket");
             accessTokenDao.save(jsapiticket) ;
         }
+        WeixiProperty.JSAPITICKET = map.get("ticket").toString() ;
     }
 
 }
