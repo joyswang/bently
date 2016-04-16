@@ -29,7 +29,7 @@
                 <img src="/resources/images/binli.jpg" class="logo"/>
                 <strong>宾利俱乐部管理平台</strong>
             </a>
-            <ul class="nav navbar-nav top-menu">
+            <ul class="nav navbar-nav top-menu" ng-if="user">
                 <li>
                     <a ng-class="{'top-menu-active':isState('home')}" ui-sref="home">首页</a>
                 </li>
@@ -47,11 +47,45 @@
                 </li>
             </ul>
         </div>
+        <login-avatar></login-avatar>
     </div>
 </div>
 
 <div class="main-container" id="main-container">
-    <div ui-view></div>
+    <div ui-view ng-if="user"></div>
+    <div ng-if="!user" style="padding-top: 10%;padding-left: 25%;">
+
+                <div class="col-sm-12">
+                    <form class="form-horizontal" role="form" >
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">用户名:</label>
+
+                            <div class="col-sm-9">
+                                <input  type="text" ng-model="user.name">
+                            </div>
+                        </div>
+
+                        <div class="space-4"></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">密 码:</label>
+                            <div class="col-sm-9">
+                                <input ng-model="user.password"  type="password">
+                            </div>
+                        </div>
+
+                        <alert type="danger" ng-show="loginMessage">
+                            <div class="pre-wrap max-height-200">{{loginMessage}}</div>
+                        </alert>
+                        <div class="col-md-offset-3 col-md-9">
+                            <button class="btn btn-primary" type="submit" ng-click="login(user)">
+                                登入
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+
+    </div>
 </div>
 <script data-main="/js/main" src="/assets/js/require.min.js"></script>
 </body>

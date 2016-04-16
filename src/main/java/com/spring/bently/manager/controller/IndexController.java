@@ -37,10 +37,13 @@ public class IndexController {
     @Autowired
     private UserDao userDao;
 
-    @RequestMapping("/home")
+    @RequestMapping("/user")
     public BentlyResponse indexHome(HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookieArray = request.getCookies();
         String userName = "";
+        if(cookieArray == null ){
+            return  BentlyResponse.fail("用户未登入");
+        }
         for(Cookie cookie : cookieArray){
             String cookieName = cookie.getName();
             String cookieValue = cookie.getValue();
@@ -64,16 +67,30 @@ public class IndexController {
 
     @RequestMapping("/login")
     public BentlyResponse login(@RequestBody User user,HttpServletRequest request,HttpServletResponse response){
-
         User result = userDao.findByNameAndPassword(user.getName(),user.getPassword());
-
         if(result == null){
             return BentlyResponse.fail("用户名或密码错误");
         }
-
         Cookie cookie  = new Cookie("userName",result.getName());
         response.addCookie(cookie);
-        return BentlyResponse.success("登入成功");
+        return BentlyResponse.success(result);
+
+
+    }
+
+    @RequestMapping("/logout")
+    public BentlyResponse logout(HttpServletRequest request,HttpServletResponse response){
+
+        Cookie[] cookieArray = request.getCookies();
+        for(Cookie cookie : cookieArray){
+            String cookieName = cookie.getName();
+            if("userName".equals(cookieName)){
+                cookie.setValue("");
+                response.addCookie(cookie);
+            }
+        }
+
+        return BentlyResponse.success("注销成功!");
 
 
     }

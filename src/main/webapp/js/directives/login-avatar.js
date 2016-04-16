@@ -1,23 +1,35 @@
 'use strict';
 
 define(['./module', 'lodash'], function(module, _) {
-    module.directive('loginAvatar', ['$window', 'UserService' ,function($window, UserService) {
+    module.directive('loginAvatar', ['$window','$http',function($window,$http) {
         return {
             restrict: 'E',
             templateUrl: '/pages/templates/login-avatar.html',
             link: function(scope) {
-                UserService.currentUser().then(function(data) {
-                    scope.user = data;
-                    var menus = UserService.menus(scope.user.roleList, scope.user.superUser);
-                    if (!_.chain(menus).values().contains(true).value()) {
-                        $window.location.href = '/403.html';
-                        return;
-                    }
-                    scope.user.menus = menus;
-                });
+                scope.user =undefined;
+                scope.loginMessage = undefined;
 
+                $http.get("/user").then(function(data){
+                    if(data.data.success){
+                        scope.user = data.data.data;
+                        scope.loginMessage =undefined;
+                    }
+                });
                 scope.logout = function() {
-                    UserService.logout();
+                    $http.get("/logout").then(function(data){
+                        if(data.data.success){
+                            scope.user =undefined;
+                        }
+                    });
+                };
+                scope.login = function(user) {
+                    $http.post('/login',user).then(function(data){
+                        if(data.data.success){
+                            scope.user =data.data.data;
+                        }else{
+                            scope.loginMessage ='用户名或密码失败!';
+                        }
+                    });
                 };
             }
         };
