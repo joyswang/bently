@@ -11,19 +11,27 @@
 package com.spring.bently.manager.controller;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.spring.bently.manager.dao.*;
 import com.spring.bently.manager.model.*;
 import com.spring.bently.manager.pagedata.BentlyResponse;
+import com.spring.bently.manager.utils.UserUtil;
+import com.spring.bently.wx.service.ISendMessageService;
+import com.spring.bently.wx.service.IUserGroupService;
+import com.spring.bently.wx.service.impl.SendTextMessageService;
+import com.spring.bently.wx.service.impl.UserGroupService;
+import com.spring.bently.wx.utils.JsonUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+
 import org.slf4j.Logger;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 功能描述:  <p>
@@ -50,6 +58,9 @@ public class MemberCenterController {
     @Autowired
     private RescueDao rescueDao;
 
+    @Autowired
+    private UserDao userDao;
+
     private static Logger logger = LoggerFactory.getLogger(MemberCenterController.class);
 
     @RequestMapping("/get/washCarList")
@@ -63,7 +74,7 @@ public class MemberCenterController {
     }
 
     @RequestMapping("/handle/washCar")
-    public BentlyResponse handleHotel(long id){
+    public BentlyResponse handleHotel(long id,HttpServletRequest request){
 
         WashCar washCar = washCarDao.findOne(id);
         Member member = memberDao.findByWechatid(washCar.getWechatid());
@@ -81,7 +92,7 @@ public class MemberCenterController {
         }
 
         washCar.setIsHandle(true);
-        washCar.setHandleuser("bentley");
+        washCar.setHandleuser(UserUtil.getCurrentUser(request,userDao).getName());
         washCar.setUpdateTime(new Date());
         WashCar result = washCarDao.save(washCar);
         if(result == null){
@@ -105,7 +116,7 @@ public class MemberCenterController {
     }
 
     @RequestMapping("/handle/waxing")
-    public BentlyResponse handleWaxing(long id){
+    public BentlyResponse handleWaxing(long id,HttpServletRequest request){
 
         Waxing waxing = waxingDao.findOne(id);
         Member member = memberDao.findByWechatid(waxing.getWechatid());
@@ -123,7 +134,7 @@ public class MemberCenterController {
         }
 
         waxing.setIsHandle(true);
-        waxing.setHandleuser("bentley");
+        waxing.setHandleuser(UserUtil.getCurrentUser(request,userDao).getName());
         waxing.setUpdateTime(new Date());
         Waxing result = waxingDao.save(waxing);
         if(result == null){
@@ -146,7 +157,7 @@ public class MemberCenterController {
     }
 
     @RequestMapping("/handle/maintenance")
-    public BentlyResponse handleMaintenance(long id){
+    public BentlyResponse handleMaintenance(long id,HttpServletRequest request){
 
         Maintenance maintenance = maintenanceDao.findOne(id);
         Member member = memberDao.findByWechatid(maintenance.getWechatid());
@@ -164,7 +175,7 @@ public class MemberCenterController {
         }
 
         maintenance.setIsHandle(true);
-        maintenance.setHandleuser("bentley");
+        maintenance.setHandleuser(UserUtil.getCurrentUser(request, userDao).getName());
         maintenance.setUpdateTime(new Date());
         Maintenance result = maintenanceDao.save(maintenance);
         if(result == null){
@@ -187,7 +198,7 @@ public class MemberCenterController {
     }
 
     @RequestMapping("/handle/rescue")
-    public BentlyResponse handleRescue(long id){
+    public BentlyResponse handleRescue(long id,HttpServletRequest request){
 
         Rescue rescue = rescueDao.findOne(id);
         Member member = memberDao.findByWechatid(rescue.getWechatid());
@@ -205,7 +216,7 @@ public class MemberCenterController {
         }
 
         rescue.setIsHandle(true);
-        rescue.setHandleuser("bentley");
+        rescue.setHandleuser(UserUtil.getCurrentUser(request, userDao).getName());
         rescue.setUpdateTime(new Date());
         Rescue result = rescueDao.save(rescue);
         if(result == null){
@@ -254,6 +265,43 @@ public class MemberCenterController {
             logger.info("会员信息操作:"+dbMember.toString());
             return BentlyResponse.success(result);
         }
+    }
+
+    @RequestMapping("/groups")
+    public BentlyResponse getGroup(){
+
+        IUserGroupService userGroupService = new UserGroupService();
+        Map map  = JsonUtils.jsonToMap(userGroupService.listGroup());
+        if(map.size() == 0){
+            return BentlyResponse.fail("请先设置会员分组");
+        }
+        ArrayList groupList = (ArrayList)map.get("groups");
+
+        if(groupList.size() == 0){
+            return BentlyResponse.fail("请先设置会员分组");
+        }
+        return BentlyResponse.success(groupList);
+    }
+
+    @RequestMapping("/sendMessage")
+    public BentlyResponse sendMessage(long id, String context){
+
+        ISendMessageService sendMessageService = new SendTextMessageService();
+        Map<String,Object> map = Maps.newHashMap();
+        map.put("group_id",id);
+        map.put("context",context);
+
+        String result = sendMessageService.sendMessage(map);
+
+        Map resultMap = JsonUtils.jsonToMap(result);
+
+        int code = (Integer)resultMap.get("errcode");
+        if(code == 0){
+            return BentlyResponse.success("消息发送成功");
+        }else{
+            return BentlyResponse.fail("消息发送失败");
+        }
+
     }
 
 

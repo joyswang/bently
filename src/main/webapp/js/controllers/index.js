@@ -17,6 +17,7 @@ define([
     './member/member-manager-edit',
     './member/rescue-list',
     './member/washcar-list',
-    './member/waxing-list'
+    './member/waxing-list',
+    './member/weixin-bulk'
 
 ], function() {});

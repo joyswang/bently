@@ -297,6 +297,20 @@ define(['app'], function(app) {
                 ncyBreadcrumb: {
                     label: "用户设置"
                 }
+            })
+            .state('manager.group', {
+                url: '/group',
+                views: {
+                    'content@manager': {
+                        templateUrl: '/pages/member/weixin-bulk.html',
+                        controller: 'GroupCtrl',
+                        controllerAs: 'vm'
+                    }
+                },
+                ncyBreadcrumb: {
+                    label: "微信群发"
+                }
             });
+
     }]);
 });

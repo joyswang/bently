@@ -20,11 +20,13 @@ import com.spring.bently.manager.model.ClubSummary;
 import com.spring.bently.manager.model.User;
 import com.spring.bently.manager.model.UserActivity;
 import com.spring.bently.manager.pagedata.BentlyResponse;
+import com.spring.bently.manager.utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -89,8 +91,8 @@ public class FastNewController {
     }
 
     @RequestMapping("/update/clubDynamic")
-    public BentlyResponse updateClubDynamic(@RequestBody ClubDynamic clubDynamic){
-        clubDynamic.setHandleuser("bentley");
+    public BentlyResponse updateClubDynamic(@RequestBody ClubDynamic clubDynamic,HttpServletRequest request){
+        clubDynamic.setHandleuser(UserUtil.getCurrentUser(request, userDao).getName());
         clubDynamic.setUpdateTime(new Date());
         ClubDynamic result = clubDynamicDao.save(clubDynamic);
         if(result == null){
@@ -112,9 +114,9 @@ public class FastNewController {
     }
 
     @RequestMapping("/save/clubDynamic")
-    public BentlyResponse saveClubDynamic(@RequestBody ClubDynamic clubDynamic){
+    public BentlyResponse saveClubDynamic(@RequestBody ClubDynamic clubDynamic,HttpServletRequest request){
 
-        clubDynamic.setHandleuser("bentley");
+        clubDynamic.setHandleuser(UserUtil.getCurrentUser(request, userDao).getName());
         clubDynamic.setUpdateTime(new Date());
         ClubDynamic result = clubDynamicDao.save(clubDynamic);
 
@@ -137,8 +139,8 @@ public class FastNewController {
     }
 
     @RequestMapping("/update/clubActivity")
-    public BentlyResponse updateUserActivity(@RequestBody UserActivity userActivity){
-        userActivity.setHandleuser("bentley");
+    public BentlyResponse updateUserActivity(@RequestBody UserActivity userActivity,HttpServletRequest request){
+        userActivity.setHandleuser(UserUtil.getCurrentUser(request, userDao).getName());
         userActivity.setUpdateTime(new Date());
         UserActivity result = userActivityDao.save(userActivity);
         if(result == null){
@@ -160,9 +162,9 @@ public class FastNewController {
     }
 
     @RequestMapping("/save/clubActivity")
-    public BentlyResponse saveClubDynamic(@RequestBody UserActivity userActivity){
+    public BentlyResponse saveClubDynamic(@RequestBody UserActivity userActivity,HttpServletRequest request){
 
-        userActivity.setHandleuser("bentley");
+        userActivity.setHandleuser(UserUtil.getCurrentUser(request, userDao).getName());
         userActivity.setUpdateTime(new Date());
         UserActivity result = userActivityDao.save(userActivity);
         if(result == null){
