@@ -69,7 +69,7 @@ public class AccessTokenSchedule {
     public void jsapiTicketScheduled() {
         log.info("进入jsapi_ticket........");
         String jsapi_ticket_url = WeixinPropertiesUtils.getProperties("jsapi_ticket_url") ;
-        String access_token = accessTokenDao.findByType("normal").getAccesstoken() ;
+        String access_token = WeixiProperty.ACCESSTOKEN ;
 
         String postUrl = StringUtils.replaceEach(jsapi_ticket_url,access_token) ;
         log.info("postUrl = " + postUrl);

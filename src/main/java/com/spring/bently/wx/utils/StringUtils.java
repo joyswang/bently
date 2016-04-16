@@ -1,7 +1,12 @@
 package com.spring.bently.wx.utils;
 
+import com.spring.bently.wx.utils.httptool.CustomHttpConnection;
+import com.spring.bently.wx.utils.httptool.HttpConnectionCommon;
+import sun.misc.BASE64Decoder;
+
 import javax.servlet.http.HttpServletRequest;
 import java.security.MessageDigest;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -57,9 +62,9 @@ public class StringUtils {
         Random random = new Random(100) ;
         int id = random.nextInt(999) ;
 
-        long time = System.currentTimeMillis() / 1000 ;
+        long time = System.currentTimeMillis() ;
 
-        return "D" + time + id ;
+        return "" + time + id ;
     }
 
     public static String StringFilter(String str)   throws PatternSyntaxException {
@@ -110,6 +115,82 @@ public class StringUtils {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static String getWeixiCallBackUrl(HttpServletRequest request,String path) {
+        StringBuilder builder = new StringBuilder(request.getScheme()+"://"+request.getServerName()+path) ;
+        String code = request.getParameter("code") ;
+        String state = request.getParameter("state") ;
+        if(state.indexOf("#") != -1) {
+            state = state.replace("#","%23") ;
+            //state = state.substring(0,state.indexOf("#")) ;
+        }
+        builder.append("?code=").append(code).append("&state=").append(state) ;
+        return builder.toString() ;
+    }
+
+    //如果传入的参数是数组
+    public static String getUrl(HttpServletRequest request,String path) {
+        StringBuilder builder = new StringBuilder(request.getScheme()+"://"+request.getServerName()+"/wx/member/carwash") ;
+        Map<String,String[]> map = request.getParameterMap() ;
+        if(map != null && map.size() > 0) {
+            builder.append("?") ;
+        }
+        else {
+            return builder.toString() ;
+        }
+        for(String key:map.keySet()) {
+            String[] array = map.get(key) ;
+            String value = array[0] ;
+            builder.append(key).append("=").append(array[0]).append("&") ;
+        }
+        builder.deleteCharAt(builder.length() - 1) ;
+        return builder.toString() ;
+    }
+
+    //微信得到的经纬度转换成百度的经纬度
+    public static String getBaiDuLocationXY(String x, String y) {
+        String result = "";
+        String url = "http://api.map.baidu.com/ag/coord/convert?from=2&to=4&x="
+                + x + "&y=" + y + "";
+        CustomHttpConnection customHttpConnection = new CustomHttpConnection(new HttpConnectionCommon(url,"GET")) ;
+        String response = customHttpConnection.httpClient(null) ;
+        if (!StringUtils.isEmpty(response)) {
+            Map map = JsonUtils.jsonToMap(response) ;
+            if (map != null && 0 == map.get("error")) {
+               // byte[] xbuff = Base64.decodeFast(map.get("x"));
+               // byte[] ybuff = Base64.decodeFast(map.get("y"));
+                result = getFromBase64(map.get("x").toString()) + "|" + getFromBase64(map.get("y").toString());
+            }
+        }
+        return result;
+    }
+
+    //根据百度经纬度得打地址，，地址有误差，误差根据pois
+    //x 纬度  y精度
+    public static String getLocationName(String x, String y,String pois) {
+        String ss = getBaiDuLocationXY(x,y) ;
+        String[] arr = ss.split("\\|") ;
+        String url = "http://api.map.baidu.com/geocoder/v2/?location=" + arr[0] + "," + arr[1] + "&output=json&ak=9CSMnOb7VMbWQ5GQLMtR2gZoG0KS2Zcn&pois="+pois;
+        CustomHttpConnection customHttpConnection = new CustomHttpConnection(new HttpConnectionCommon(url,"GET")) ;
+        String json = customHttpConnection.httpClient(null) ;
+        System.out.println(json);
+        return json ;
+    }
+
+    public static String getFromBase64(String s) {
+        byte[] b = null;
+        String result = null;
+        if (s != null) {
+            BASE64Decoder decoder = new BASE64Decoder();
+            try {
+                b = decoder.decodeBuffer(s);
+                result = new String(b, "utf-8");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
 
     public static void main(String[] args) {

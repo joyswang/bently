@@ -51,6 +51,7 @@ public class Rescue {
      * 时间
      */
     @Column
+    @Deprecated
     private Date destinetime;
 
     /**
@@ -58,6 +59,12 @@ public class Rescue {
      */
     @Column(length = 100)
     private String address;
+
+    /**
+     * 手动输入的地址
+     */
+    @Column(length = 100)
+    private String realAddress ;
 
     /**
      * 办理人名称
@@ -141,6 +148,14 @@ public class Rescue {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getRealAddress() {
+        return realAddress;
+    }
+
+    public void setRealAddress(String realAddress) {
+        this.realAddress = realAddress;
     }
 }
 
