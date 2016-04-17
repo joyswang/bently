@@ -56,12 +56,17 @@ public class WaxingController extends CommonController {
         if(userinfoMap == null) {
             return "error" ;
         }
+
         String wcdate = request.getParameter("wcdate") ;
         String latitude = request.getParameter("latitude") ;    //纬度
         String longitude = request.getParameter("longitude") ;        //经度
         String accuracy = request.getParameter("accuracy") ;    //位置精度
         String addressJson = StringUtils.getLocationName(latitude,longitude,accuracy) ;
         Map addressMap = JsonUtils.jsonToMap(addressJson) ;
+        if(StringUtils.isEmpty(latitude)) {
+            model.addAttribute("请先打开定位功能") ;
+            return "warning" ;
+        }
         String address = "" ;
         if(addressMap!=null && "0".equals(addressMap.get("status").toString())) {
             log.info("addressMap = " + ((Map)addressMap.get("result")).get("formatted_address"));
