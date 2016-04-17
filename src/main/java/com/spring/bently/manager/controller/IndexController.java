@@ -82,6 +82,9 @@ public class IndexController {
     public BentlyResponse logout(HttpServletRequest request,HttpServletResponse response){
 
         Cookie[] cookieArray = request.getCookies();
+        if(cookieArray == null){
+            return BentlyResponse.success("注销成功!");
+        }
         for(Cookie cookie : cookieArray){
             String cookieName = cookie.getName();
             if("userName".equals(cookieName)){
