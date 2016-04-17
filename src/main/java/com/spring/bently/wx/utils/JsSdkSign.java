@@ -24,9 +24,9 @@ public class JsSdkSign {
         }
     }
 
-    public static Map<String, String> getSign(HttpServletRequest request) {
-        String url = request.getScheme()+"://"+request.getServerName()+"/wx/member/recharge";
-        System.out.println("url = " + url);
+    public static Map<String, String> getSign(HttpServletRequest request,String url) {
+       // String url = request.getScheme()+"://"+request.getServerName()+"/wx/member/recharge";
+        //System.out.println("url = " + url);
        // AccessToken jsapiticket = accessTokenDao.findByType("jsapi_ticket") ;
         Map<String, String> map = JsSdkSign.sign(WeixiProperty.JSAPITICKET, url) ;
         map.put("appid", WeixinPropertiesUtils.getProperties("appid")) ;

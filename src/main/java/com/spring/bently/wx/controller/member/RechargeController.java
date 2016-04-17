@@ -1,15 +1,12 @@
 package com.spring.bently.wx.controller.member;
 
 import com.spring.bently.manager.dao.MemberDao;
+import com.spring.bently.manager.model.Member;
 import com.spring.bently.wx.controller.common.CommonController;
-import com.spring.bently.wx.utils.JsSdkSign;
-import com.spring.bently.wx.utils.StringUtils;
 import com.spring.bently.wx.utils.WeixinPropertiesUtils;
-import com.spring.bently.wx.utils.XmlUtils;
-import com.spring.bently.wx.utils.httptool.CustomHttpsConnection;
-import com.spring.bently.wx.utils.httptool.HttpConnectionCommon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Created by wgq on 16-4-11.
@@ -30,6 +25,9 @@ import java.util.TreeMap;
 public class RechargeController extends CommonController {
 
     private static Logger log = LoggerFactory.getLogger(RechargeController.class) ;
+
+    @Autowired
+    private MemberDao memberDao ;
 
     @RequestMapping(value = "",method = RequestMethod.GET)
     public String view(HttpServletRequest request, HttpSession session,ModelMap model) {
@@ -67,7 +65,7 @@ public class RechargeController extends CommonController {
             return "error" ;
         }
 
-        //把.平台的公共属性，在平台初始化的时候就加入到内存中
+    /*    //把.平台的公共属性，在平台初始化的时候就加入到内存中
         Map<String,Object> map = new TreeMap<String,Object>() ; //使用TreeMap 自动排序
         String key = WeixinPropertiesUtils.getProperties("wxkey");   //商户支付平台key，用于生成0sign
 
@@ -113,8 +111,13 @@ public class RechargeController extends CommonController {
             }
         }else {
             return "error" ;
-        }
+        }*/
+        Member member = getMemberDao().findByWechatid(userinfoMap.get("openid").toString()) ;
+        member.setIsVip(true);
 
+        getMemberDao().save(member) ;
+
+        model.addAttribute("msg","支付成功") ;
         return "success" ;
     }
 
@@ -132,6 +135,6 @@ public class RechargeController extends CommonController {
 
     @Override
     public MemberDao getMemberDao() {
-        return null;
+        return memberDao;
     }
 }

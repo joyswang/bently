@@ -14,6 +14,9 @@ public class JsonUtils {
 
     //map-to-json
     public static String mapToJson(Map map) {
+        if(map == null) {
+            return null ;
+        }
 
         ObjectMapper objectMapper = new ObjectMapper() ;
         try {
@@ -28,6 +31,9 @@ public class JsonUtils {
 
     //json-to-map
     public static Map jsonToMap(String json) {
+        if(json == null) {
+            return null ;
+        }
 
         ObjectMapper objectMapper = new ObjectMapper() ;
 
@@ -43,6 +49,9 @@ public class JsonUtils {
 
     //json-to-object
     public static Object jsonToObject(String json,Class object) {
+        if(json == null) {
+            return null ;
+        }
         ObjectMapper objectMapper = new ObjectMapper() ;
 
         Object o = null ;
@@ -57,6 +66,9 @@ public class JsonUtils {
 
     //object-to-json
     public static String objectToJson(Object o) {
+        if(o == null) {
+            return null ;
+        }
         ObjectMapper objectMapper = new ObjectMapper() ;
         try {
             String value = objectMapper.writeValueAsString(o) ;

@@ -24,7 +24,7 @@ public class WebAccessTokenUtil {
         log.info("accessTokenJson = " + accessTokenJson);
 
         Map accessTokenmap = JsonUtils.jsonToMap(accessTokenJson) ;
-        if(accessTokenmap.get("errcode") != null) {
+        if(accessTokenmap == null || accessTokenmap.get("errcode") != null) {
 
             return null ;
         }
@@ -38,6 +38,25 @@ public class WebAccessTokenUtil {
 
     }
 
+    public static Map week_access_token_request(String code) {
+        String code_access_token_url = WeixinPropertiesUtils.getProperties("code_access_token_url") ;
+        String URL = StringUtils.replaceEach(code_access_token_url,WeixinPropertiesUtils.getProperties("appid"),
+                WeixinPropertiesUtils.getProperties("secret"),code) ;
+        HttpConnectionCommon hcc = new HttpConnectionCommon(URL,"GET") ;
+        CustomHttpsConnection connection = new CustomHttpsConnection(hcc) ;
+        String accessTokenJson = connection.httpsClient(null) ;
+        log.info("accessTokenJson = " + accessTokenJson);
+
+        Map accessTokenmap = JsonUtils.jsonToMap(accessTokenJson) ;
+        if(accessTokenmap == null || accessTokenmap.get("errcode") != null) {
+
+            return null ;
+        }
+        String openid = accessTokenmap.get("openid").toString() ;
+        Map userinfomap = userinfo_request_normal(WeixiProperty.ACCESSTOKEN,openid) ;
+        return userinfomap ;
+    }
+
     //通过web_access_token和openid获取用户信息
     private static Map userinfo_request(String access_token,String openid) {
         String get_userinfo_url = WeixinPropertiesUtils.getProperties("get_userinfo_url") ;
@@ -46,7 +65,7 @@ public class WebAccessTokenUtil {
         CustomHttpsConnection connection = new CustomHttpsConnection(hcc) ;
         String userinfoJson = connection.httpsClient(null) ;
         Map userinfomap = JsonUtils.jsonToMap(userinfoJson) ;
-        if(userinfomap.get("errcode") != null) {
+        if(userinfomap == null || userinfomap.get("errcode") != null) {
 
             return null ;
         }
@@ -63,7 +82,7 @@ public class WebAccessTokenUtil {
         CustomHttpsConnection connection = new CustomHttpsConnection(hcc) ;
         String userinfoJson = connection.httpsClient(null) ;
         Map userinfomap = JsonUtils.jsonToMap(userinfoJson) ;
-        if(userinfomap.get("errcode") != null) {
+        if(userinfomap == null || userinfomap.get("errcode") != null) {
 
             return null ;
         }
