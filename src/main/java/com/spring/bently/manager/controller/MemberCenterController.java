@@ -276,6 +276,9 @@ public class MemberCenterController {
             return BentlyResponse.fail("请先设置会员分组");
         }
         ArrayList groupList = (ArrayList)map.get("groups");
+        if(groupList == null){
+            return BentlyResponse.fail("请先设置会员分组");
+        }
 
         if(groupList.size() == 0){
             return BentlyResponse.fail("请先设置会员分组");
