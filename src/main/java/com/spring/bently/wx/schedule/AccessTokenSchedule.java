@@ -65,7 +65,7 @@ public class AccessTokenSchedule {
         WeixiProperty.ACCESSTOKEN = map.get("access_token").toString() ;
     }
 
-    @Scheduled(cron = "24 0 * * * ?")
+    @Scheduled(cron = "24 30 * * * ?")
     public void jsapiTicketScheduled() {
         log.info("进入jsapi_ticket........");
         String jsapi_ticket_url = WeixinPropertiesUtils.getProperties("jsapi_ticket_url") ;
