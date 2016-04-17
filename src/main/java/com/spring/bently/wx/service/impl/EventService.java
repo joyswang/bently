@@ -88,6 +88,9 @@ public class EventService extends AbstractEventService {
     public String unsubscribeEvent(Map<String, String> map) {
         String openid = map.get("fromusername") ;
         Member member = memberDao.findByWechatid(openid) ;
+        if(member == null) {
+            return "success" ;
+        }
         member.setIsSubscribe(false);
         memberDao.save(member) ;
         return "success";

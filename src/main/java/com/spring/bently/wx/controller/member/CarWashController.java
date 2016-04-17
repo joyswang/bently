@@ -65,6 +65,10 @@ public class CarWashController extends CommonController {
         String addressJson = StringUtils.getLocationName(latitude,longitude,accuracy) ;
         Map addressMap = JsonUtils.jsonToMap(addressJson) ;
         String address = "" ;
+        if(StringUtils.isEmpty(latitude)) {
+            model.addAttribute("请先打开定位功能") ;
+            return "warning" ;
+        }
         if(addressMap!=null && "0".equals(addressMap.get("status").toString())) {
             log.info("addressMap = " + ((Map)addressMap.get("result")).get("formatted_address"));
 

@@ -64,6 +64,10 @@ public class RescueController extends CommonController {
         String longitude = request.getParameter("longitude") ;        //经度
         String accuracy = request.getParameter("accuracy") ;    //位置精度
         String address = "" ;
+        if(StringUtils.isEmpty(latitude)) {
+            model.addAttribute("请先打开定位功能") ;
+            return "warning" ;
+        }
         if(!StringUtils.isEmpty(latitude) && !StringUtils.isEmpty(longitude)) {
             String addressJson = StringUtils.getLocationName(latitude,longitude,accuracy) ;
             Map addressMap = JsonUtils.jsonToMap(addressJson) ;
