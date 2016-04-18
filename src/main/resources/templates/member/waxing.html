@@ -109,7 +109,9 @@
                 },fail: function() {
                     $.hideLoading();
                     $.alert("请打开定位获取位置信息") ;
-                    $("#submitButton").bind("click",mySubmitForm()) ;
+                    $("#submitButton").bind("click",function() {
+                        mySubmitForm();
+                    }) ;
                 }
             });
         }else {
