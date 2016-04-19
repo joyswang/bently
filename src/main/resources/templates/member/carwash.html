@@ -93,6 +93,7 @@
         if(latitude == null || latitude == "") {
             $("#submitButton").unbind("click") ;
             $.showLoading("数据加载中");
+            var flag = false ;
             wx.getLocation({
                 type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
                 success: function (res) {
@@ -109,11 +110,15 @@
                 },fail: function() {
                     $.hideLoading();
                     $.alert("请打开定位获取位置信息") ;
+                    flag = true ;
                     $("#submitButton").bind("click",function() {
                         mySubmitForm();
                     }) ;
                 }
             });
+            if(flag) {
+                return false ;
+            }
         }else {
             defaultForm.submit();
         }
