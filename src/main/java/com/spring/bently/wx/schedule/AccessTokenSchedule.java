@@ -28,7 +28,7 @@ public class AccessTokenSchedule {
     private AccessTokenDao accessTokenDao ;
 
     //每个小时触发一次
-    @Scheduled(cron = "0 0 * * * ?")
+    @Scheduled(cron = "0 * * * * ?")
     public void getAccessTokenScheduled() {
         log.info("进入access_token........");
 
@@ -65,7 +65,7 @@ public class AccessTokenSchedule {
         WeixiProperty.ACCESSTOKEN = map.get("access_token").toString() ;
     }
 
-    @Scheduled(cron = "24 30 * * * ?")
+    @Scheduled(cron = "24 * * * * ?")
     public void jsapiTicketScheduled() {
         log.info("进入jsapi_ticket........");
         String jsapi_ticket_url = WeixinPropertiesUtils.getProperties("jsapi_ticket_url") ;
