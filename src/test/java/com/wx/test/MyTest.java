@@ -1,7 +1,5 @@
 package com.wx.test;
 
-import com.spring.bently.wx.service.impl.SendTextMessageService;
-import com.spring.bently.wx.service.impl.UserGroupService;
 import com.spring.bently.wx.utils.JsSdkSign;
 import com.spring.bently.wx.utils.StringUtils;
 import com.spring.bently.wx.utils.WeixinPropertiesUtils;
@@ -63,19 +61,19 @@ public class MyTest {
     @Test
     public void testWxPay() {
         Map<String,Object> map = new TreeMap<String,Object>() ; //使用TreeMap 自动排序
-        String key = "bentleyclub88153426benlteyclub88";   //商户支付平台key，用于生成0sign
+        String key = "bentleyclub99153426benlteyclub99";   //商户支付平台key，用于生成0sign
         map.put("appid", "wxf354b3a19d4fe54b") ;    //appid
         map.put("mch_id", "1327994601") ;  //商户号
         map.put("nonce_str", "2hsdjfhslylljkj24h2ghj4jh2j") ;  //随机字符串
         map.put("device_info", "WEB") ;
         map.put("body", "11") ;  //商品描述
-        map.put("out_trade_no", "D12345422332") ;    //商户订单号
+        map.put("out_trade_no", "D12345422392") ;    //商户订单号
         map.put("total_fee", 12 * 30 * 100) ;
         map.put("spbill_create_ip", "127.0.0.1") ;    //终端ip
         //接收微信支付异步通知回调地址，通知url必须为直接可访问的url，不能携带参数。
-        map.put("notify_url", "http://wgq.tunnel.qydev.com/wx/member/recharge/callback") ;
+        map.put("notify_url", "http://sss.tunnel.qydev.com/wx/member/recharge/callback") ;
         map.put("trade_type", "JSAPI") ;    //交易类型
-        map.put("openid","oSyr1wftCyS_OZoeWpZBhGCYDOKI") ;    //openid
+        map.put("openid","oygVcwB3xFoQqOTklmOBcdyiMU50") ;    //openid
         String sign = JsSdkSign.getPrePaySign(map, key) ;
         Map<String,Object> requestMap = new LinkedHashMap<String,Object>() ;
         for(String keys:map.keySet()) {
@@ -102,15 +100,15 @@ public class MyTest {
         map.put("is_to_all",false) ;
         map.put("group",true);
 
-        SendTextMessageService sendTextMessageService = new SendTextMessageService() ;
-        String responseMsg = sendTextMessageService.sendMessage(map) ;
-        System.out.println(responseMsg);
+       // SendTextMessageService sendTextMessageService = new SendTextMessageService() ;
+       // String responseMsg = sendTextMessageService.sendMessage(map) ;
+        //System.out.println(responseMsg);
     }
 
     @Test
     public void testGetGroupList() {
-        UserGroupService userGroupService = new UserGroupService() ;
-        System.out.println(userGroupService.listGroup());
+        //UserGroupService userGroupService = new UserGroupService() ;
+        //System.out.println(userGroupService.listGroup());
     }
 
     @Test

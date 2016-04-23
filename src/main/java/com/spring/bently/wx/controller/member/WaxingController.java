@@ -93,9 +93,9 @@ public class WaxingController extends CommonController {
             waxing.setIsHandle(false);
             waxingDao.save(waxing) ;
 
-            waxingnum = waxingnum - 1 ;
-            member.setWaxingnum(waxingnum);
-            memberDao.save(member) ;
+            //waxingnum = waxingnum - 1 ;
+            //member.setWaxingnum(waxingnum);
+            //memberDao.save(member) ;
         }catch (Exception e) {
             e.printStackTrace();
             log.info("添加hotelDestine出错，错误信息：" + e.getMessage());

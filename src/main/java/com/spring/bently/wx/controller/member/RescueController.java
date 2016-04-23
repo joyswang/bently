@@ -98,9 +98,9 @@ public class RescueController extends CommonController {
             rescue.setRealAddress(localtion);
             rescueDao.save(rescue) ;
 
-            resucenum = resucenum - 1 ;
-            member.setIndoorrenum(resucenum);
-            memberDao.save(member) ;
+            //resucenum = resucenum - 1 ;
+            //member.setIndoorrenum(resucenum);
+            //memberDao.save(member) ;
         }catch (Exception e) {
             e.printStackTrace();
             log.info("添加hotelDestine出错，错误信息：" + e.getMessage());

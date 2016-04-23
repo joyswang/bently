@@ -2,7 +2,7 @@ package com.spring.bently.wx.utils;
 
 import com.spring.bently.wx.utils.httptool.CustomHttpConnection;
 import com.spring.bently.wx.utils.httptool.HttpConnectionCommon;
-import sun.misc.BASE64Decoder;
+import org.apache.commons.codec.binary.Base64;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.MessageDigest;
@@ -182,9 +182,10 @@ public class StringUtils {
         byte[] b = null;
         String result = null;
         if (s != null) {
-            BASE64Decoder decoder = new BASE64Decoder();
+            Base64 base64 = new Base64() ;
+            //BASE64Decoder decoder = new BASE64Decoder();
             try {
-                b = decoder.decodeBuffer(s);
+                b = base64.decode(s);
                 result = new String(b, "utf-8");
             } catch (Exception e) {
                 e.printStackTrace();

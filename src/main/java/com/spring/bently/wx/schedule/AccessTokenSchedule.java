@@ -56,13 +56,15 @@ public class AccessTokenSchedule {
             if(accessToken == null) {
                 accessToken = new AccessToken() ;
             }
+            WeixiProperty.ACCESSTOKEN = map.get("access_token").toString() ;
             accessToken.setAccesstoken(map.get("access_token").toString());
             //accessToken.setType("normal");
             accessTokenDao.save(accessToken) ;
             //WeixinPropertiesUtils.setProperties("access_token",map.get("access_token").toString());
         }
 
-        WeixiProperty.ACCESSTOKEN = map.get("access_token").toString() ;
+        log.info("WeixiProperty.ACCESSTOKEN = " + WeixiProperty.ACCESSTOKEN);
+
     }
 
     @Scheduled(cron = "24 30 * * * ?")
@@ -90,11 +92,12 @@ public class AccessTokenSchedule {
             if(jsapiticket == null) {
                 jsapiticket = new AccessToken() ;
             }
+            WeixiProperty.JSAPITICKET = map.get("ticket").toString() ;
             jsapiticket.setAccesstoken(map.get("ticket").toString());
             //accessToken.setType("jsapi_ticket");
             accessTokenDao.save(jsapiticket) ;
         }
-        WeixiProperty.JSAPITICKET = map.get("ticket").toString() ;
+        log.info("WeixiProperty.JSAPITICKET = " + WeixiProperty.JSAPITICKET);
     }
 
 }

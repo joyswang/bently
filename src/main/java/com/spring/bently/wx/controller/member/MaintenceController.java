@@ -91,9 +91,9 @@ public class MaintenceController extends CommonController {
             maintenance.setIsHandle(false);
             maintenanceDao.save(maintenance) ;
 
-            maintenancenum = maintenancenum - 1 ;
-            member.setMaintenancenum(maintenancenum);
-            memberDao.save(member) ;
+            //maintenancenum = maintenancenum - 1 ;
+            //member.setMaintenancenum(maintenancenum);
+            //memberDao.save(member) ;
         }catch (Exception e) {
             e.printStackTrace();
             log.info("添加hotelDestine出错，错误信息：" + e.getMessage());

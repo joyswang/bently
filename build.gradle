@@ -31,6 +31,9 @@ configurations {
     providedRuntime
 }
 
+springBoot {
+    mainClass = "com.spring.bently.Application"
+}
 
 dependencies {
     compile(

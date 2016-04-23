@@ -94,9 +94,9 @@ public class CarWashController extends CommonController {
             washCar.setIsHandle(false);
             washCarDao.save(washCar) ;
 
-            washCarNum = washCarNum - 1 ;
-            member.setWashcarnum(washCarNum);
-            memberDao.save(member) ;
+            //washCarNum = washCarNum - 1 ;
+            //member.setWashcarnum(washCarNum);
+            //memberDao.save(member) ;
         }catch (Exception e) {
             e.printStackTrace();
             log.info("添加hotelDestine出错，错误信息：" + e.getMessage());
