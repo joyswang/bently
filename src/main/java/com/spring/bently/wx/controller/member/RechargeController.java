@@ -134,8 +134,9 @@ public class RechargeController extends CommonController {
         getMemberDao().save(member) ;
         //添加订单信息
         OrderInfo orderInfo = new OrderInfo() ;
-        orderInfo.setWechatname(userinfoMap.get("nickname").toString());
-        orderInfo.setWechatid(userinfoMap.get("openid").toString());
+        log.info("member.getWechatname() = " + member.getWechatname());
+        orderInfo.setWechatname(member.getWechatname());
+        orderInfo.setWechatid(member.getWechatid());
         orderInfo.setCreateTime(new Date());
         //为了不损失精度
         orderInfo.setMoney(new BigDecimal(month_in));
