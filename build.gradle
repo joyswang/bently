@@ -54,7 +54,7 @@ dependencies {
 
 
     )
-//    providedRuntime "org.springframework.boot:spring-boot-starter-tomcat"
+    providedRuntime "org.springframework.boot:spring-boot-starter-tomcat"
     testCompile(
             "junit:junit:4.11",
             "org.springframework.boot:spring-boot-starter-test"
